@@ -1,0 +1,63 @@
+---
+title: Defense in depth
+description: The provider safeguard stack across the model lifecycle, and why no single layer is trusted alone — as a simulator.
+sidebar:
+  order: 10
+---
+
+*Module 10 · Part III — How providers defend*
+
+No frontier provider relies on one guardrail. They stack layers across the whole
+lifecycle so that when one is fooled — and it will be (M4, M7) — the next one still has a
+chance. Just as important, a layer that fires on a *benign* request has a cost: the
+over-refusal that frustrates legitimate users, including security defenders doing their
+jobs.
+
+The simulator below is the mental model for the whole of Part III. Everything after this
+module zooms into one layer at a time.
+
+## Run requests through the stack
+
+Toggle layers on and off, choose a defanged test request, and watch where it's caught —
+or where it leaks. Then watch the aggregate: dropping a layer usually lets more harmful
+requests through; turning everything up can over-refuse benign ones.
+
+import GuardrailStackSimulator from '../../../components/GuardrailStackSimulator.tsx';
+
+<GuardrailStackSimulator client:load />
+
+## The six layers
+
+1. **Identity & access tier** — *who* is asking. Vetted defenders can be granted more
+   capability through trusted-access programs; everyone else meets the default policy.
+2. **Input screening** — prompt and injection classifiers on the incoming request,
+   including on retrieved documents and tool output.
+3. **Safety-trained model** — refusal behavior trained in via a specification or
+   constitution. The first line, but never the only one.
+4. **Activation monitor** — the 2026 addition. A cheap probe reads the model's internal
+   activations and can halt an answer mid-stream; harder to fool than the surface text
+   ([Anthropic, Jan 2026](https://www.anthropic.com/research/next-generation-constitutional-classifiers);
+   [OpenAI GPT-5.6 card, Jul 2026](https://deploymentsafety.openai.com/gpt-5-6)).
+5. **Output screening** — classifies the answer *in the context of its input*, which is
+   what catches output-obfuscation attacks. Can **reroute** a flagged request to a weaker
+   model instead of refusing outright ([Anthropic, Sep 2026](https://www.anthropic.com/claude-fable-and-mythos-5-1)).
+6. **Async review & enforcement** — offline monitoring that doesn't block the single
+   response but can act on the account later.
+
+## Why "reroute, don't refuse" matters
+
+Watch the "benign over-refused" number when you turn on aggressive layers. Because
+over-refusal is a real product cost, current stacks increasingly **reroute** a flagged
+request to a lower-capability model rather than refusing it, or let the user retry on a
+weaker model. That keeps the benign user moving while still denying the dangerous
+capability. This is why the same account can get an answer for vulnerability *discovery*
+but a rerouted, weaker response for exploit *development* (M13, M17).
+
+## Check yourself
+
+1. Which single layer, turned off, lets the most harmful requests through in the
+   simulator? Why is it doing so much work?
+2. Find a configuration that catches every harmful request but over-refuses a benign one.
+   What would you change to fix the false positive without letting harm through?
+3. The activation monitor catches the encoded jailbreak that input screening misses. In
+   one sentence, why can it see what the input classifier can't?

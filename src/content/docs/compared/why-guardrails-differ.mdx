@@ -1,0 +1,56 @@
+---
+title: Why guardrails differ
+description: Why the same request meets a different wall on every model — the comparison matrix, every cell sourced and dated.
+sidebar:
+  order: 17
+---
+
+*Module 17 · Part IV — Guardrails compared*
+
+Ask three frontier models the same borderline question and you can get three different
+responses: one answers, one refuses, one quietly routes you to a weaker model. That isn't
+randomness. It's because **guardrails live in different places for different providers**,
+and increasingly depend on *who is asking*.
+
+This module makes the differences concrete. The matrix below compares three providers
+across eight dimensions — every cell links to a primary source, carries an evidence tag,
+and shows when it was last checked.
+
+import ComparisonMatrix from '../../../components/ComparisonMatrix.tsx';
+
+<ComparisonMatrix client:load />
+
+## The pattern to notice
+
+Read down the **"Response to a flag"** row. The big 2026 shift is away from a hard refusal
+toward **rerouting**: a flagged request is handed to a less capable model rather than
+bounced. That's what lets the same account get help with vulnerability *discovery* but a
+downgraded answer for exploit *development* — the capability is gated, not the user.
+
+Then read the **"Access tiers"** row. All three providers now reserve their strongest
+cyber capability for *vetted defenders* through a named program. The guardrail is no longer
+only "what is being asked" but "who is asking, and have they been verified."
+
+## Case study: one model, two safeguard sets
+
+Anthropic's Claude Fable 5.1 and Mythos 5.1 are the **same underlying model** with
+different safeguards — Mythos is the vetted-access build with cyber and life-science
+restrictions relaxed. Compare that to open weights, where refusal can be removed from the
+model itself, and the whole "trained refusal" layer simply doesn't exist for a determined
+user. Same capability, four different control points depending on the release.
+
+:::note[Extending the matrix]
+The matrix reads from one data file (`src/data/comparison.ts`). Adding a provider or a
+dimension is a data edit, not a code change — which is how the course stays current without
+rewriting lessons. The full course adds Meta, Microsoft, AWS, xAI, Mistral, and the Chinese
+open-weight labs here.
+:::
+
+## Check yourself
+
+1. Filter to **Inferred** cells. Those are our readings, not provider statements — why is
+   it honest to mark them differently, and what would move one to *Documented*?
+2. Two providers both "reserve cyber capability for trusted defenders." Using the matrix,
+   name one way their *mechanisms* still differ.
+3. For an open-weight model with refusals stripped out, which rows of the matrix still
+   offer any protection at all?

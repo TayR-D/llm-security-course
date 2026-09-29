@@ -1,0 +1,20 @@
+{
+  "name": "inside-the-guardrails",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Inside the Guardrails — an interactive course on LLM security and how frontier providers prevent misuse.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.0.0",
+    "@astrojs/starlight": "^0.42.4",
+    "astro": "^7.3.5",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}

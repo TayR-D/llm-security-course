@@ -1,0 +1,60 @@
+---
+title: Inside the Guardrails
+description: An interactive course on LLM security and how frontier providers prevent misuse of their models.
+template: splash
+hero:
+  tagline: Learn why attacks and defenses work — taught by mechanism, not payload — and why the same request meets a different wall on every model.
+  actions:
+    - text: Start with the foundations
+      link: foundations/context-window/
+      icon: right-arrow
+      variant: primary
+    - text: Jump to how providers defend
+      link: defenses/defense-in-depth/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## What this is
+
+A hands-on course on LLM security for people who already know web and application
+security but not the machine-learning internals. It runs from how models work, through
+the attack landscape, into how frontier providers actually prevent misuse — with the
+provider **guardrail comparison** at its core.
+
+This is the **Phase 1 vertical slice**: the site shell plus three flagship interactives,
+one from each layer of the course. The remaining modules slot in around them.
+
+<CardGrid>
+  <Card title="M4 · The context window is one string" icon="puzzle">
+    The root cause of prompt injection, shown live. Build a multi-role
+    conversation and watch it flatten into a single token stream.
+    [Open the lesson →](foundations/context-window/)
+  </Card>
+  <Card title="M10 · Defense in depth" icon="padlock">
+    The provider safeguard stack as a simulator. Send defanged test
+    requests through each layer, switch layers off, see what gets through.
+    [Open the lesson →](defenses/defense-in-depth/)
+  </Card>
+  <Card title="M17 · Why guardrails differ" icon="list-format">
+    The comparison matrix. Filter three providers across eight dimensions —
+    every cell sourced and dated.
+    [Open the lesson →](compared/why-guardrails-differ/)
+  </Card>
+  <Card title="Built on primary sources" icon="approve-check">
+    Every provider claim links to the provider's own system card, policy
+    page, or paper, tagged *Documented*, *Observed* or *Inferred* and dated.
+  </Card>
+</CardGrid>
+
+## How to read the interactives
+
+Each one is a model of documented behavior, not a live measurement. Where a number
+comes from a provider's own reporting, it is cited and dated. Attacks appear only as
+defanged or historical examples — the course teaches mechanisms, never working payloads.
+
+:::note[Phase 1 scope]
+Three of the course's 19 modules are built here. The full course map, the other 16
+modules, and the build roadmap live in the planning doc that accompanies this repo.
+:::

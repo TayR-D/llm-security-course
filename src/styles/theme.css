@@ -1,0 +1,121 @@
+/* Inside the Guardrails — theme + shared interactive widget styles.
+   Colors are defined as tokens that follow Starlight's light/dark themes,
+   so every interactive reads correctly in both without per-widget overrides. */
+
+:root {
+  /* Accent (teal/blue security palette) mapped onto Starlight's accent slots */
+  --sl-color-accent-low: #c7f9ff;
+  --sl-color-accent: #0a7ea4;
+  --sl-color-accent-high: #063d50;
+
+  /* Widget tokens — light theme.
+     NOTE: use explicit hex, not Starlight's --sl-color-black/white/gray tokens,
+     which invert between themes and would flip our ink to white in light mode. */
+  --wg-surface: #f3f4f7;
+  --wg-surface-raised: #ffffff;
+  --wg-border: #c9ced7;
+  --wg-ink: #17181c;
+  --wg-ink-quiet: #545862;
+  --wg-accent: #0a7ea4;
+  --wg-accent-soft: rgba(10, 126, 164, 0.12);
+  --wg-good: #1a7f47;
+  --wg-good-soft: rgba(26, 127, 71, 0.12);
+  --wg-warn: #9a6700;
+  --wg-warn-soft: rgba(154, 103, 0, 0.14);
+  --wg-bad: #b3261e;
+  --wg-bad-soft: rgba(179, 38, 30, 0.12);
+  --wg-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+  --wg-radius: 10px;
+}
+
+:root[data-theme='dark'] {
+  --wg-surface: #1c1f26;
+  --wg-surface-raised: #23272f;
+  --wg-border: #3a404b;
+  --wg-ink: #eceef2;
+  --wg-ink-quiet: #a4abb8;
+  --wg-accent: #4fc3e8;
+  --wg-accent-soft: rgba(79, 195, 232, 0.16);
+  --wg-good: #5fd08a;
+  --wg-good-soft: rgba(95, 208, 138, 0.16);
+  --wg-warn: #e5b567;
+  --wg-warn-soft: rgba(229, 181, 103, 0.18);
+  --wg-bad: #f08a82;
+  --wg-bad-soft: rgba(240, 138, 130, 0.16);
+}
+
+/* ---- Shared widget frame ---- */
+.wg {
+  border: 1px solid var(--wg-border);
+  border-radius: var(--wg-radius);
+  background: var(--wg-surface-raised);
+  color: var(--wg-ink);
+  padding: 1rem;
+  margin: 1.25rem 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+.wg * { box-sizing: border-box; }
+.wg h3, .wg h4 { margin: 0 0 0.25rem; line-height: 1.25; }
+.wg .wg-note { color: var(--wg-ink-quiet); font-size: 0.82rem; margin: 0.35rem 0 0; }
+.wg .wg-mono { font-family: var(--wg-mono); }
+
+.wg-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.wg-col { display: flex; flex-direction: column; gap: 0.5rem; }
+
+/* Buttons / chips */
+.wg-btn {
+  font: inherit;
+  border: 1px solid var(--wg-border);
+  background: var(--wg-surface);
+  color: var(--wg-ink);
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.wg-btn:hover { border-color: var(--wg-accent); }
+.wg-btn[aria-pressed='true'],
+.wg-btn.is-active {
+  background: var(--wg-accent-soft);
+  border-color: var(--wg-accent);
+  color: var(--wg-ink);
+}
+.wg-btn:focus-visible { outline: 2px solid var(--wg-accent); outline-offset: 2px; }
+
+/* Toggle switch */
+.wg-toggle { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
+.wg-toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+.wg-track {
+  width: 34px; height: 20px; border-radius: 999px;
+  background: var(--wg-border); position: relative; transition: background 0.15s ease; flex: none;
+}
+.wg-track::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+  border-radius: 50%; background: #fff; transition: transform 0.15s ease;
+}
+.wg-toggle input:checked + .wg-track { background: var(--wg-accent); }
+.wg-toggle input:checked + .wg-track::after { transform: translateX(14px); }
+.wg-toggle input:focus-visible + .wg-track { outline: 2px solid var(--wg-accent); outline-offset: 2px; }
+
+/* Verdict pills */
+.wg-pill { display: inline-flex; align-items: center; gap: 0.3rem; border-radius: 999px; padding: 0.1rem 0.55rem; font-size: 0.78rem; font-weight: 600; }
+.wg-pill.good { background: var(--wg-good-soft); color: var(--wg-good); }
+.wg-pill.warn { background: var(--wg-warn-soft); color: var(--wg-warn); }
+.wg-pill.bad { background: var(--wg-bad-soft); color: var(--wg-bad); }
+
+/* Tables inside widgets */
+.wg-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.wg-table th, .wg-table td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--wg-border); vertical-align: top; }
+.wg-table th { color: var(--wg-ink-quiet); font-weight: 600; }
+
+/* A small "illustrative model" banner */
+.wg-banner {
+  font-size: 0.78rem; color: var(--wg-ink-quiet);
+  border-top: 1px dashed var(--wg-border); margin-top: 0.85rem; padding-top: 0.55rem;
+}
+
+@media (max-width: 500px) {
+  .wg { padding: 0.85rem; }
+  .wg-btn { padding: 0.35rem 0.55rem; font-size: 0.85rem; }
+}
