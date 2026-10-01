@@ -1,0 +1,54 @@
+---
+title: Training-time safeguards
+description: Refusal training, Constitutional AI, specs, and the instruction hierarchy — the safeguards baked into the weights.
+sidebar:
+  order: 11
+---
+
+*Module 11 · Part III — How providers defend*
+
+The first layer of the stack (M10) lives inside the model itself, put there during training
+(M3). These safeguards travel with the weights — which is their strength (always on, no extra
+latency) and their weakness (can't be updated without retraining, and can be fine-tuned away
+on open weights).
+
+- **Refusal training** (SFT + RLHF/RLAIF): teaches the model to decline disallowed requests.
+- **Constitutional AI**: uses a written constitution and AI feedback instead of human labels
+  for every example, so alignment scales.
+- **Specs / constitutions as the policy source**: the explicit document the model (and often
+  the runtime classifiers, M12) is optimized against.
+- **Safe completions vs hard refusals**: answering the safe part of a request instead of a
+  blanket "I can't help with that" — less over-refusal (M12), same safety.
+- **Instruction-hierarchy training**: teaching the model to rank instructions by privilege so
+  a user — or an injection — can't override the system.
+- **Adversarial training & tamper resistance**: training against known attacks, and research
+  into making open-weight alignment harder to strip out.
+
+## The instruction hierarchy, resolved
+
+Instruction-hierarchy training is the training-time answer to M4's "it's all one string." If
+the model learns that platform > developer > user > tool, then an injection arriving as tool
+output loses to the system rule. Watch it resolve:
+
+import InstructionHierarchy from '../../../components/InstructionHierarchy.tsx';
+
+<InstructionHierarchy client:load />
+
+## Why training-time alone isn't enough
+
+Everything here is a *trained tendency*, not a guarantee (M3) — which is exactly why the stack
+adds runtime layers on top (M12–M14). Two limits in particular:
+
+- **It can't be patched quickly.** A newly discovered jailbreak can't wait for the next
+  training run; a runtime classifier can be updated today.
+- **It doesn't survive open weights.** Fine-tuning can remove refusal (M7, M9), and no
+  training-time safeguard is present at inference to stop that. This is central to your
+  self-hosted capstone, where you run an open-weight model with refusals removed.
+
+## Check yourself
+
+1. Why does instruction-hierarchy training specifically defend against *indirect injection*?
+2. "Safe completion" vs "hard refusal" — which reduces over-refusal, and why doesn't it reduce
+   safety?
+3. Which training-time safeguard gives you the *least* protection on a self-hosted open-weight
+   model, and why?

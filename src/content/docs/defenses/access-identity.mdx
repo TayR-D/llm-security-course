@@ -1,0 +1,52 @@
+---
+title: Access, identity and platform controls
+description: Usage policies, trusted-access programs, fallback routing, anti-distillation and misuse detection — safeguards outside the model.
+sidebar:
+  order: 13
+---
+
+*Module 13 · Part III — How providers defend*
+
+Some of the most important safeguards aren't in the model or its classifiers at all — they're in
+the *platform*: who you are, what you're allowed, and what happens when you cross a line. This
+is the layer that turned "what is being asked" into "who is asking, and have they been verified."
+
+- **Usage policies + enforcement ladders.** The written rules, plus graduated consequences
+  (warnings, rate limits, suspension).
+- **Trusted-access programs.** Verified defenders unlock capability the general model withholds:
+  Anthropic's Cyber Verification Program and Life Sciences Verification Program, OpenAI's Trusted
+  Access for Cyber, Google's Fairwind Program.
+- **Fallback routing.** Flagged requests are *rerouted* to a weaker model rather than refused —
+  the single biggest lever on over-refusal (M12).
+- **Per-end-user safety identifiers.** Let a provider act on one abusive user instead of an
+  entire organization.
+- **Anti-distillation.** Measures that make it harder to extract a model's capabilities into an
+  unguarded copy (M9).
+- **Misuse detection with privacy.** Systems like Enterprise Frontier Safeguards detect misuse
+  while keeping zero-data-retention privacy — review happens on the customer's own
+  infrastructure.
+
+## Who gets what
+
+The same request gets a different answer depending on the asker's tier. Pick an identity and a
+request and watch the gate decide: full model, rerouted, or refused.
+
+import CapabilityGate from '../../../components/CapabilityGate.tsx';
+
+<CapabilityGate client:load />
+
+## Why this is the layer that scales
+
+Model- and classifier-level safeguards treat every request the same. The access layer is what
+lets a provider say "yes" to a verified hospital security team and "rerouted" to an anonymous
+account for the *identical* prompt — the only way to serve dual-use work without opening the
+capability to everyone. It's also the layer most relevant to *your* platform: on a self-hosted,
+multi-tenant deployment with an unguarded model, tenant identity and enforcement are much of the
+safety you have (the capstone).
+
+## Check yourself
+
+1. Why does rerouting-to-a-weaker-model reduce over-refusal more gracefully than a hard refusal?
+2. What does a per-end-user safety identifier let a provider do that org-level enforcement can't?
+3. On a self-hosted open-weight platform, which controls from this module can you actually
+   implement, and which depend on the provider?

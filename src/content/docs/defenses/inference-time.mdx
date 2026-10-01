@@ -1,0 +1,56 @@
+---
+title: Inference-time guardrails
+description: Input, output and exchange classifiers, cascades, activation probes and chain-of-thought monitoring — the runtime layer.
+sidebar:
+  order: 12
+---
+
+*Module 12 · Part III — How providers defend*
+
+Runtime guardrails are the layers you can update without retraining. They screen traffic as it
+flows, and they're where most of the 2026 innovation happened. The central design problem is a
+trade-off you can't escape: catch more attacks, or refuse fewer benign users — a single
+threshold can't do both.
+
+- **Input / output / exchange classifiers.** Input classifiers screen the request (including
+  tool/RAG content); output classifiers screen the answer. The key 2026 move was the
+  **exchange** classifier — judging the output *in the context of its input* — which is what
+  catches reconstruction and output-obfuscation attacks that beat input- or output-only
+  screening (M7).
+- **Constitution-trained classifiers.** The same written policy that aligns the model trains
+  the classifier, so they agree on what's disallowed.
+- **Cascades.** A cheap first stage screens everything and *escalates* flagged traffic to an
+  expensive second stage instead of refusing — cutting both over-refusal and compute.
+- **Activation probes / classifiers.** Read the model's internal activations ("gut feeling")
+  rather than surface text; harder to fool with obfuscation, and cheap enough to run on all
+  traffic.
+- **Chain-of-thought monitoring.** Watch the reasoning trace for trouble — useful, but fragile:
+  a model can learn to hide intent from its own CoT (M14).
+
+## Tune the threshold yourself
+
+Every classifier lives or dies in the overlap between benign and harmful. Drag the threshold
+and watch the two error rates move in opposite directions — then switch on the cascade.
+
+import ClassifierThreshold from '../../../components/ClassifierThreshold.tsx';
+
+<ClassifierThreshold client:load />
+
+## The numbers that make this real
+
+Anthropic's next-generation **Constitutional Classifiers++** are the clearest public example of
+the cascade + activation-probe design: a linear probe screens all traffic and escalates flagged
+exchanges, reaching a **0.05% refusal rate on harmless queries** (an 87% drop from the first
+generation) at roughly **1% added compute**, with no universal jailbreak found across 1,700+
+hours of red-teaming
+([Anthropic, Jan 2026](https://www.anthropic.com/research/next-generation-constitutional-classifiers)).
+OpenAI's GPT-5.6 ships **activation classifiers that can halt generation mid-stream**
+([GPT-5.6 system card, Jul 2026](https://deploymentsafety.openai.com/gpt-5-6)).
+
+## Check yourself
+
+1. In the tuner, why can't a single classifier drive both "attacks missed" and "benign
+   over-refused" to zero at once?
+2. The cascade drops over-refusal *and* compute. What's the trick that lets it do both? (Hint:
+   escalate, don't refuse.)
+3. Why is an activation probe harder to fool than an input classifier reading the same request?

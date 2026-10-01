@@ -1,0 +1,54 @@
+---
+title: Frontier safety frameworks and governance
+description: RSP, Preparedness, the Frontier Safety Framework and Meta's scaling framework — how capability thresholds decide which safeguards are mandatory.
+sidebar:
+  order: 15
+---
+
+*Module 15 · Part III — How providers defend*
+
+Zoom all the way out. Which safeguards a model *must* have before release isn't decided
+per-feature — it's decided by a **frontier safety framework**: a policy that ties capability
+thresholds to required protections. Reach a threshold, and stronger security and deployment
+safeguards become mandatory.
+
+All four major labs now run one, and they rhyme even though the names differ. Compare the rungs:
+
+import FrameworkLadder from '../../../components/FrameworkLadder.tsx';
+
+<FrameworkLadder client:load />
+
+## The shared shape, and why it matters
+
+Each framework has a baseline, a "serious uplift" rung that triggers hardened safeguards, and a
+"catastrophic" rung that can pause a release. The common pattern — *if a model reaches
+capability X, then safeguards Y become required* — is what makes these auditable rather than
+aspirational. It also explains the product decisions you saw earlier: Mythos-class access, the
+reroute-to-Opus behavior, and Flash Cyber's gating all fall out of where a model lands on its
+lab's ladder.
+
+## Voluntary vs legally binding
+
+A 2026 wrinkle worth knowing: several labs now keep *two* documents. Anthropic's **Responsible
+Scaling Policy** is its voluntary framework, while a separate **Frontier Compliance Framework**
+is the one designated under laws like California's SB 53; OpenAI similarly published a Frontier
+Governance Framework as its statutory document
+([RSP v3, Feb 2026](https://anthropic.com/news/responsible-scaling-policy-v3)). The legal driver
+matters: the EU Code of Practice, SB 53, and New York's RAISE Act are increasingly what *require*
+a framework to exist at all.
+
+## External checks
+
+Frameworks are stronger when someone outside the lab tests the model: the UK AI Security
+Institute and the US Center for AI Standards and Innovation (CAISI) run independent evaluations,
+and labs commission external red-teaming (e.g. Gray Swan) — all of which feed the system cards
+and risk reports that the comparison matrix (M17) cites.
+
+## Check yourself
+
+1. What does it mean, concretely, for a safeguard to be "mandatory" under one of these
+   frameworks?
+2. Why would a lab split its policy into a voluntary framework *and* a separate compliance
+   document?
+3. Pick any product behavior from M13 (e.g. rerouting cyber requests to a weaker model) and
+   trace it back to a rung on one of these ladders.

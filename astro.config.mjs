@@ -49,11 +49,12 @@ export default defineConfig({
         {
           label: 'III · How providers defend',
           items: [
-            {
-              label: 'M10 · Defense in depth',
-              slug: 'defenses/defense-in-depth',
-              badge: { text: 'interactive', variant: 'tip' },
-            },
+            { label: 'M10 · Defense in depth', slug: 'defenses/defense-in-depth', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M11 · Training-time safeguards', slug: 'defenses/training-time', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M12 · Inference-time guardrails', slug: 'defenses/inference-time', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M13 · Access, identity & platform', slug: 'defenses/access-identity', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M14 · Safeguards that face inward', slug: 'defenses/inward-facing', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M15 · Frameworks & governance', slug: 'defenses/frameworks-governance', badge: { text: 'interactive', variant: 'tip' } },
           ],
         },
         {
