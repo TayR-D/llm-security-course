@@ -12,8 +12,8 @@ export default function ProviderProfiles() {
   const p = PROFILES.find((x) => x.id === selId)!;
 
   return (
-    <div className="wg">
-      <h3>Provider profiles</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Reference">Provider profiles</h3>
       <p className="wg-note">
         The same template for every provider, so differences jump out. Pick one. Closed-API
         providers stack safeguards they control; open-weight providers hand you the toolkit — and
@@ -65,13 +65,13 @@ export default function ProviderProfiles() {
       <style>{`
         .pp-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.5rem 0; }
         .pp-tab { font: inherit; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--wg-border);
-          border-radius: 7px; background: var(--wg-surface-raised); padding: 0.4rem 0.6rem; cursor: pointer; }
+          border-radius: var(--r-md); background: var(--wg-surface-raised); padding: 0.4rem 0.6rem; cursor: pointer; }
         .pp-tab.is-sel { background: var(--wg-accent-soft); border-color: var(--wg-accent); }
         .pp-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin: 0.3rem 0 0.5rem; }
         .pp-name { font-size: 0.95rem; }
         .pp-fields { margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-        .pp-field { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.5rem 0.6rem; background: var(--wg-surface); }
-        .pp-field dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--wg-ink-quiet); font-weight: 700; }
+        .pp-field { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.5rem 0.6rem; background: var(--wg-surface); }
+        .pp-field dt { font-size: 0.72rem; color: var(--wg-ink-quiet); font-weight: 700; }
         .pp-field dd { margin: 0.25rem 0 0; font-size: 0.85rem; }
         .pp-sources { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
         .pp-src { font-size: 0.78rem; }

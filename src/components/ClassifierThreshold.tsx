@@ -50,8 +50,8 @@ export default function ClassifierThreshold() {
   const x = (v: number) => v * W;
 
   return (
-    <div className="wg">
-      <h3>Classifier threshold tuner</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Tuner">Classifier threshold tuner</h3>
       <p className="wg-note">
         A guardrail classifier gives each request a risk score. A <strong>threshold</strong>{' '}
         decides what to block. There is no free setting: lower it and you catch more attacks

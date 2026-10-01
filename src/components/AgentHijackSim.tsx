@@ -77,8 +77,8 @@ export default function AgentHijackSim() {
   const allThree = trifecta.data && trifecta.untrusted && trifecta.channel;
 
   return (
-    <div className="wg">
-      <h3>Agent hijack simulator</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Simulator">Agent hijack simulator</h3>
       <p className="wg-note">
         Indirect prompt injection in action: the instruction isn&apos;t from the user, it&apos;s
         hidden in content the agent reads. Harm needs all three of the{' '}
@@ -140,24 +140,24 @@ export default function AgentHijackSim() {
 
       <style>{`
         .ah-trifecta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.6rem 0;
-          padding: 0.5rem; border: 1px solid var(--wg-border); border-radius: 8px; background: var(--wg-surface); }
-        .ah-leg { font-size: 0.8rem; font-weight: 600; border: 1px solid var(--wg-border); border-radius: 999px;
+          padding: 0.5rem; border: 1px solid var(--wg-border); border-radius: var(--r-md); background: var(--wg-surface); }
+        .ah-leg { font-size: 0.8rem; font-weight: 600; border: 1px solid var(--wg-border); border-radius: var(--r-sm);
           padding: 0.15rem 0.6rem; color: var(--wg-ink-quiet); }
         .ah-leg.on { color: var(--wg-bad); border-color: var(--wg-bad); background: var(--wg-bad-soft); }
         .ah-plus { color: var(--wg-ink-quiet); font-weight: 700; }
-        .ah-status { margin-left: auto; font-size: 0.8rem; font-weight: 700; padding: 0.15rem 0.6rem; border-radius: 999px; }
+        .ah-status { margin-left: auto; font-size: 0.8rem; font-weight: 700; padding: 0.15rem 0.6rem; border-radius: var(--r-sm); }
         .ah-status.bad { color: var(--wg-bad); background: var(--wg-bad-soft); }
         .ah-status.good { color: var(--wg-good); background: var(--wg-good-soft); }
         .ah-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 1rem; }
         @media (max-width: 720px) { .ah-grid { grid-template-columns: 1fr; } }
-        .ah-def { border: 1px solid var(--wg-border); border-radius: 7px; padding: 0.45rem 0.55rem; margin-top: 0.4rem; background: var(--wg-surface-raised); }
+        .ah-def { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.45rem 0.55rem; margin-top: 0.4rem; background: var(--wg-surface-raised); }
         .ah-def-name { font-weight: 600; font-size: 0.84rem; }
         .ah-def-blurb { margin: 0.3rem 0 0; }
         .ah-steps { margin: 0.4rem 0 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.3rem; }
         .ah-step { font-size: 0.83rem; padding: 0.15rem 0; }
         .ah-step.ah-danger { color: var(--wg-bad); }
         .ah-step.ah-blocked { color: var(--wg-good); font-weight: 600; }
-        .ah-outcome { margin-top: 0.6rem; padding: 0.55rem 0.7rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; }
+        .ah-outcome { margin-top: 0.6rem; padding: 0.55rem 0.7rem; border-radius: var(--r-md); font-size: 0.85rem; font-weight: 600; }
         .ah-outcome.bad { background: var(--wg-bad-soft); color: var(--wg-ink); }
         .ah-outcome.good { background: var(--wg-good-soft); color: var(--wg-ink); }
       `}</style>

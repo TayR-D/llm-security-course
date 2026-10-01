@@ -89,8 +89,8 @@ export default function InstructionHierarchy() {
   }, [sc, respectHierarchy]);
 
   return (
-    <div className="wg">
-      <h3>Instruction hierarchy resolver</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Resolver">Instruction hierarchy resolver</h3>
       <p className="wg-note">
         Instructions arrive at different privilege levels. When they conflict, a model trained
         on an <em>instruction hierarchy</em> follows the most privileged one — which is what
@@ -162,7 +162,7 @@ export default function InstructionHierarchy() {
 
       <style>{`
         .ih-levels { display: flex; flex-direction: column; gap: 0.4rem; margin: 0.3rem 0 0.6rem; }
-        .ih-level { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.5rem 0.6rem; background: var(--wg-surface-raised); }
+        .ih-level { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.5rem 0.6rem; background: var(--wg-surface-raised); }
         .ih-level.ih-untrusted { border-left: 3px solid var(--wg-bad); }
         .ih-level.ih-winner { outline: 2px solid var(--wg-accent); outline-offset: 1px; }
         .ih-level.ih-overridden { opacity: 0.6; }
@@ -170,7 +170,7 @@ export default function InstructionHierarchy() {
         .ih-level-name { font-weight: 700; font-size: 0.86rem; }
         .ih-prio { font-size: 0.72rem; color: var(--wg-ink-quiet); font-family: var(--wg-mono); }
         .ih-directive { margin: 0.25rem 0 0.4rem; font-size: 0.85rem; }
-        .ih-outcome { padding: 0.55rem 0.7rem; border-radius: 8px; font-size: 0.85rem; background: var(--wg-surface); }
+        .ih-outcome { padding: 0.55rem 0.7rem; border-radius: var(--r-md); font-size: 0.85rem; background: var(--wg-surface); }
         .ih-outcome.good { background: var(--wg-good-soft); }
         .ih-outcome.bad { background: var(--wg-bad-soft); }
       `}</style>

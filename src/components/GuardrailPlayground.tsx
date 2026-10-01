@@ -55,8 +55,8 @@ export default function GuardrailPlayground() {
   const falseAlarms = BENIGN_ITEMS.slice(0, fp);
 
   return (
-    <div className="wg">
-      <h3>Guardrail config playground</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Playground">Guardrail config playground</h3>
       <p className="wg-note">
         You don&apos;t have to build a guard from scratch — open models exist. But they differ a
         lot, and independent benchmarks have a blunt finding: <em>bigger is not safer</em>, and
@@ -117,7 +117,7 @@ export default function GuardrailPlayground() {
         .gp-strict { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.84rem; font-weight: 600; margin: 0.4rem 0; }
         .gp-strict input { accent-color: var(--wg-accent); max-width: 420px; }
         .gp-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin: 0.5rem 0; max-width: 420px; }
-        .gp-cell { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.5rem; display: flex; flex-direction: column; gap: 0.1rem; font-size: 0.78rem; }
+        .gp-cell { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.5rem; display: flex; flex-direction: column; gap: 0.1rem; font-size: 0.78rem; }
         .gp-cell .gp-n { font-size: 1.3rem; font-weight: 700; }
         .gp-tp { background: var(--wg-good-soft); }
         .gp-tn { background: var(--wg-good-soft); }

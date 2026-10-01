@@ -1,0 +1,29 @@
+---
+// Home-page course route: the five parts in order, each with its modules.
+import { PARTS } from '../data/course.mjs';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<ol class="itg-route not-content" aria-label="Course parts">
+  {
+    PARTS.map((part, i) => (
+      <li>
+        <span class="itg-num" aria-hidden="true">{i + 1}</span>
+        <div>
+          <h2>{part.name}</h2>
+          <p>{part.goal}</p>
+          <ul class="itg-modules">
+            {part.modules.map((m) => (
+              <li>
+                <a href={`${base}${m.slug}/`}>
+                  {m.n && <span class="itg-mnum">{m.n}</span>}
+                  {m.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </li>
+    ))
+  }
+</ol>

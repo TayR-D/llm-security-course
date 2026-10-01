@@ -1,0 +1,44 @@
+---
+// Home-page hero: headline, lede, two actions, and the guardrail itself.
+const { hero, title } = Astro.locals.starlightRoute.entry.data;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const href = (link: string) => (/^https?:/.test(link) ? link : base + link.replace(/^\//, ''));
+const actions = hero?.actions ?? [];
+const posts = [70, 230, 390, 550, 710, 870];
+---
+
+<section class="itg-hero">
+  <h1>{hero?.title ?? title}</h1>
+  {hero?.tagline && <p class="itg-lede" set:html={hero.tagline} />}
+  {
+    actions.length > 0 && (
+      <div class="itg-actions">
+        {actions.map((a, i) => (
+          <a class={`itg-cta ${i === 0 ? 'primary' : 'secondary'}`} href={href(a.link)}>
+            {a.text}
+          </a>
+        ))}
+      </div>
+    )
+  }
+
+  <svg class="itg-rail" viewBox="0 0 960 160" role="img" aria-label="A highway guardrail: a corrugated steel W-beam on posts, with flared ends and yellow reflectors">
+    <line class="ground" x1="0" y1="152" x2="960" y2="152" stroke-width="1.5" />
+    {posts.map((x) => <rect class="post" x={x - 5.5} y="84" width="11" height="68" rx="1" />)}
+    <!-- flared terminal ends -->
+    <path class="beam" stroke-width="2.25" stroke-linejoin="round" d="M44 36 C20 36 10 50 10 65 C10 80 20 94 44 94 Z" />
+    <path class="beam" stroke-width="2.25" stroke-linejoin="round" d="M916 36 C940 36 950 50 950 65 C950 80 940 94 916 94 Z" />
+    <!-- W-beam: ridge, valley, ridge -->
+    <rect class="beam" x="44" y="36" width="872" height="58" stroke-width="2.25" />
+    <rect class="valley" x="45.2" y="55" width="869.6" height="20" />
+    <line x1="44" y1="55" x2="916" y2="55" stroke="currentColor" stroke-width="1.25" opacity="0.6" />
+    <line x1="44" y1="75" x2="916" y2="75" stroke="currentColor" stroke-width="1.25" opacity="0.6" />
+    {posts.map((x) => <rect class="reflector" x={x - 10} y="40.5" width="20" height="10" rx="1.5" />)}
+    {posts.map((x) => (
+      <>
+        <circle cx={x - 7} cy="65" r="2.6" fill="currentColor" />
+        <circle cx={x + 7} cy="65" r="2.6" fill="currentColor" />
+      </>
+    ))}
+  </svg>
+</section>

@@ -86,8 +86,8 @@ export default function TokenizerLab() {
   const dews = dewhitespaceFilter(text, TARGET);
 
   return (
-    <div className="wg">
-      <h3>Tokenizer lab</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Lab">Tokenizer lab</h3>
       <p className="wg-note">
         A keyword filter matches <span className="wg-mono">bytes</span>; a model works on{' '}
         <span className="wg-mono">tokens</span>. Obfuscation keeps the text readable to a
@@ -155,7 +155,7 @@ export default function TokenizerLab() {
             <tr>
               <td>Naive substring match for <span className="wg-mono">&ldquo;{TARGET}&rdquo;</span></td>
               <td>
-                <span className={`wg-pill ${naive ? 'bad' : 'good'}`}>
+                <span className={`wg-pill ${naive ? 'good' : 'bad'}`}>
                   {naive ? 'MATCH — blocked' : 'no match — slips through'}
                 </span>
               </td>
@@ -163,7 +163,7 @@ export default function TokenizerLab() {
             <tr>
               <td>After stripping whitespace</td>
               <td>
-                <span className={`wg-pill ${dews ? 'bad' : 'good'}`}>
+                <span className={`wg-pill ${dews ? 'good' : 'bad'}`}>
                   {dews ? 'MATCH — blocked' : 'no match — slips through'}
                 </span>
               </td>
@@ -185,16 +185,16 @@ export default function TokenizerLab() {
       </p>
 
       <style>{`
-        .tl-input { width: 100%; padding: 0.45rem 0.55rem; border-radius: 8px; border: 1px solid var(--wg-border);
+        .tl-input { width: 100%; padding: 0.45rem 0.55rem; border-radius: var(--r-md); border: 1px solid var(--wg-border);
           background: var(--wg-surface-raised); color: var(--wg-ink); font-size: 0.85rem; margin-bottom: 0.6rem; }
         .tl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         @media (max-width: 700px) { .tl-grid { grid-template-columns: 1fr; } }
-        .tl-panel { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.6rem; background: var(--wg-surface); }
-        .tl-rendered { border: 1px solid var(--wg-border); border-radius: 6px; background: var(--wg-surface-raised);
+        .tl-panel { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.6rem; background: var(--wg-surface); }
+        .tl-rendered { border: 1px solid var(--wg-border); border-radius: var(--r-sm); background: var(--wg-surface-raised);
           padding: 0.5rem; font-size: 0.95rem; word-break: break-word; min-height: 2.4rem; }
         .tl-visible { font-size: 0.82rem; }
         .tl-tokens { display: flex; flex-wrap: wrap; gap: 3px; }
-        .tl-tok { border: 1px solid var(--wg-accent); background: var(--wg-accent-soft); border-radius: 4px;
+        .tl-tok { border: 1px solid var(--wg-accent); background: var(--wg-accent-soft); border-radius: var(--r-sm);
           padding: 0.05rem 0.3rem; font-family: var(--wg-mono); font-size: 0.8rem; white-space: pre; }
         .tl-tok.tl-space { background: var(--wg-surface); border-style: dashed; color: var(--wg-ink-quiet); }
         .tl-filters { margin-top: 0.8rem; }

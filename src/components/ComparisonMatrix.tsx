@@ -43,8 +43,8 @@ export default function ComparisonMatrix() {
   }, [evidenceFilter, shown]);
 
   return (
-    <div className="wg">
-      <h3>Guardrail comparison matrix</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Matrix">Guardrail comparison matrix</h3>
       <p className="wg-note">
         The same request meets a different wall on each model because guardrails live in
         different places. Filter the providers and dimensions below; every cell links to a
@@ -200,9 +200,9 @@ export default function ComparisonMatrix() {
         .cm-dimmed { opacity: 0.38; }
         .cm-narrow { display: none; }
         .cm-select-label { font-weight: 600; font-size: 0.85rem; display: block; margin-bottom: 0.3rem; }
-        .cm-select { width: 100%; padding: 0.45rem 0.5rem; border-radius: 8px; border: 1px solid var(--wg-border);
+        .cm-select { width: 100%; padding: 0.45rem 0.5rem; border-radius: var(--r-md); border: 1px solid var(--wg-border);
           background: var(--wg-surface-raised); color: var(--wg-ink); font: inherit; font-size: 0.9rem; }
-        .cm-card { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.6rem; background: var(--wg-surface); }
+        .cm-card { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.6rem; background: var(--wg-surface); }
         .cm-card-provider { font-size: 0.9rem; }
         .cm-card-value { margin: 0.3rem 0; font-size: 0.85rem; }
         @media (max-width: 720px) {

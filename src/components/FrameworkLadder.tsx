@@ -81,8 +81,8 @@ export default function FrameworkLadder() {
   const sel = PROVIDERS.find((p) => p.id === selId)!;
 
   return (
-    <div className="wg">
-      <h3>Framework threshold ladder</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Comparison">Framework threshold ladder</h3>
       <p className="wg-note">
         Every lab ties stronger safeguards to capability thresholds. The names differ — ASLs,
         Preparedness levels, CCLs/TCLs, risk tiers — but they rhyme: a baseline, a "serious
@@ -131,7 +131,7 @@ export default function FrameworkLadder() {
       <style>{`
         .fl-framework { font-size: 0.9rem; margin: 0.3rem 0 0.5rem; }
         .fl-ladder { display: flex; flex-direction: column; gap: 0.4rem; }
-        .fl-rung { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.55rem 0.7rem; background: var(--wg-surface-raised); }
+        .fl-rung { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.55rem 0.7rem; background: var(--wg-surface-raised); }
         .fl-rung.fl-critical { border-left: 4px solid var(--wg-bad); }
         .fl-rung.fl-high { border-left: 4px solid var(--wg-warn); }
         .fl-rung.fl-baseline { border-left: 4px solid var(--wg-good); }

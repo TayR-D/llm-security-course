@@ -57,6 +57,23 @@ src/
 astro.config.mjs  Starlight config: title, sidebar, integrations
 ```
 
+## Design system
+
+The UI follows one direction: highway engineering. Quiet, legible infrastructure with one
+high-visibility colour.
+
+- **Type:** Overpass (the open descendant of the US Highway Gothic signage face), bundled
+  locally via Fontsource. Overpass Mono only for real code and token streams.
+- **Colour:** slate ink, porcelain surfaces, cobalt for anything you can act on. Safety
+  yellow is reserved for the guardrail mark. Allow, reroute and block colours carry meaning
+  only: a benign request correctly allowed is green, a harmful one let through is red.
+- **Panels:** every interactive uses the same shell in `src/styles/theme.css`:
+  `<div className="wg not-content">`, an `<h3 data-kind="…">` header, a `wg-note` lede, and a
+  `wg-banner` footer that says what the model is. `not-content` keeps article styles out.
+- **Structure:** `src/data/course.mjs` is the single source for part and module numbering. It
+  drives the sidebar, the lesson header and the home-page route.
+- **Overrides:** `src/components/overrides/` replaces Starlight's Hero and PageTitle.
+
 ## Status
 
 All planned phases complete — 19 modules + capstone, 22 pages, 14 interactives.
