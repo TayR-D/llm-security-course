@@ -37,7 +37,9 @@ export default function EvalScatter() {
   const W = 300;
   const pad = 34;
   const x = (v: number) => pad + v * (W - pad - 10);
-  const y = (v: number) => 10 + v * (W - pad - 10);
+  // y grows upward in meaning: low over-refusal sits at the BOTTOM, so the
+  // ideal (low attack, low over-refusal) is the bottom-left corner.
+  const y = (v: number) => (W - pad) - v * (W - pad - 20);
 
   const note = useMemo(() => {
     switch (sel.kind) {
@@ -63,15 +65,14 @@ export default function EvalScatter() {
 
       <div className="es-grid">
         <svg viewBox={`0 0 ${W} ${W + 16}`} className="es-svg" role="img" aria-label="Scatter of guardrail configurations by attack success and over-refusal">
-          {/* ideal corner shading */}
-          <rect x={pad} y={W - pad - 10 - 40} width={50} height={40} className="es-ideal" />
-          <text x={pad + 2} y={W - pad - 16} className="es-idealtext">ideal</text>
+          {/* ideal corner shading (bottom-left: low attack, low over-refusal) */}
+          <rect x={pad} y={W - pad - 42} width={48} height={42} className="es-ideal" />
+          <text x={pad + 3} y={W - pad - 6} className="es-idealtext">ideal</text>
           {/* axes */}
           <line x1={pad} y1={10} x2={pad} y2={W - pad} className="es-axis" />
           <line x1={pad} y1={W - pad} x2={W - 6} y2={W - pad} className="es-axis" />
-          <text x={pad} y={W - 6} className="es-axtext">attack success →</text>
-          <text x={10} y={16} className="es-axtext" transform={`rotate(-90 10 ${16})`} style={{ transformBox: 'view-box' }}></text>
-          <text x={6} y={8} className="es-axtext">over-refusal ↓</text>
+          <text x={pad} y={W - 4} className="es-axtext">attack success →</text>
+          <text x={6} y={12} className="es-axtext">↑ over-refusal</text>
           {/* points */}
           {POINTS.map((p) => (
             <g key={p.id} onClick={() => setSelId(p.id)} style={{ cursor: 'pointer' }}>
