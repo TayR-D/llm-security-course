@@ -57,3 +57,30 @@ gap between the two readings is the vulnerability.
    and what attack still works?
 3. Given that injection can't be fully prevented at the string level, where does the
    2026 defensive effort go instead? (Foreshadows M10 and M14.)
+
+import Quiz from '../../../components/Quiz.tsx';
+
+<Quiz client:load title="Quick check — M4" questions={[
+  {
+    q: 'Why can a system prompt not GUARANTEE the model ignores an instruction hidden in a retrieved document?',
+    options: [
+      'The document is encrypted',
+      'System prompt and document are concatenated into one token stream; role is a trained tendency, not an enforced boundary',
+      'Documents are always trusted',
+      'The model cannot read documents',
+    ],
+    answer: 1,
+    why: 'Everything flattens into one sequence. The model was trained to usually favor the system portion, but nothing enforces a channel boundary.',
+  },
+  {
+    q: 'A vendor says delimiters "prevent prompt injection." What is the accurate claim?',
+    options: [
+      'They eliminate injection entirely',
+      'They raise the bar but are themselves just tokens an attacker can try to break out of',
+      'They encrypt untrusted content',
+      'They only work on images',
+    ],
+    answer: 1,
+    why: 'Delimiters help the model distinguish data from instructions, but they are tokens in the same stream — a guessed or injected closing marker can defeat them.',
+  },
+]} />

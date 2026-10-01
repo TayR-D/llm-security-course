@@ -65,6 +65,13 @@ export default defineConfig({
             { label: 'M18 · Guardrails you can deploy', slug: 'compared/deployable-guardrails', badge: { text: 'interactive', variant: 'tip' } },
           ],
         },
+        {
+          label: 'V · Practice',
+          items: [
+            { label: 'M19 · Evaluating & red-teaming', slug: 'practice/evaluating-guardrails', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'Capstone · Guard a platform', slug: 'practice/capstone', badge: { text: 'capstone', variant: 'caution' } },
+          ],
+        },
       ],
     }),
   ],

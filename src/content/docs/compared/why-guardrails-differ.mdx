@@ -54,3 +54,30 @@ open-weight labs here.
    name one way their *mechanisms* still differ.
 3. For an open-weight model with refusals stripped out, which rows of the matrix still
    offer any protection at all?
+
+import Quiz from '../../../components/Quiz.tsx';
+
+<Quiz client:load title="Quick check — M17" questions={[
+  {
+    q: 'Why is an "Inferred" cell marked differently from a "Documented" one in the matrix?',
+    options: [
+      'Inferred cells are wrong',
+      'It is an honesty signal: Documented is the provider’s own statement, Inferred is the course’s reading — and a provider statement would move it',
+      'Inferred cells are older',
+      'There is no difference',
+    ],
+    answer: 1,
+    why: 'Evidence tags keep the course honest: a reading is not a claim by the provider. A sourced provider statement would reclassify it as Documented.',
+  },
+  {
+    q: 'Fable 5.1 and Mythos 5.1 are the same underlying model. What differs?',
+    options: [
+      'Their parameter counts',
+      'Their safeguards and access tier — Mythos is the vetted build with cyber/bio restrictions relaxed',
+      'Their training data',
+      'Nothing',
+    ],
+    answer: 1,
+    why: 'Same weights, different control points: Mythos is available only to vetted orgs with some safeguards lifted — one model, two safeguard sets.',
+  },
+]} />

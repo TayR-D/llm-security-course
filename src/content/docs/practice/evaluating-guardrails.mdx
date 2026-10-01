@@ -1,0 +1,71 @@
+---
+title: Evaluating and red-teaming guardrails
+description: How to measure a guardrail — attack success vs over-refusal, the benchmarks and tools, and how providers red-team at scale.
+sidebar:
+  order: 19
+---
+
+*Module 19 · Part V — Practice*
+
+A guardrail you haven't measured is a guardrail you don't have. Evaluation is what separates "we
+added a classifier" from "we know it catches 90% of attacks and over-refuses 2% of real users."
+And it always comes down to **two numbers read together** — catch rate and false-alarm rate.
+
+## The frontier you're aiming for
+
+Plot any guardrail by attack-success (lower better) and over-refusal (lower better). The goal is
+the bottom-left corner — and the only way to get there is to escalate rather than refuse (M12).
+
+import EvalScatter from '../../../components/EvalScatter.tsx';
+
+<EvalScatter client:load />
+
+## The toolkit
+
+- **Harm / jailbreak benchmarks:** HarmBench, JailbreakBench, StrongREJECT — standardized attack
+  sets that give you a comparable attack-success rate.
+- **Agent benchmarks:** AgentDojo and similar — injection and tool-misuse against agents (M8).
+- **Over-refusal sets:** XSTest and friends — benign prompts that look risky, to measure the cost
+  of your guardrails on real users.
+- **Runners:** garak, PyRIT, promptfoo — automate running these against your system in CI.
+- **Scale:** providers run large automated red-teaming (OpenAI reported 700k+ GPU-hours; Anthropic
+  1,700+ human hours) and keep running it during deployment, because new jailbreaks never stop.
+
+## Rules of engagement
+
+Red-teaming an LLM system is still security testing: scope it, get authorization, and keep it to
+systems you own or are permitted to test. Use responsible disclosure and provider bug-bounty
+programs for findings against a provider's model rather than publishing working attacks.
+
+import Quiz from '../../../components/Quiz.tsx';
+
+<Quiz client:load title="Check yourself — M19" questions={[
+  {
+    q: 'A vendor reports their guardrail blocks 99% of attacks. What single number must you ask for before trusting it?',
+    options: ['Model size', 'The over-refusal (false-positive) rate', 'Training data size', 'Latency'],
+    answer: 1,
+    why: 'A high catch rate is trivial if you also refuse everything. Attack-success and over-refusal only mean something read together.',
+  },
+  {
+    q: 'Why do providers keep running automated red-teaming during deployment, not just before launch?',
+    options: [
+      'To lower inference cost',
+      'Because new jailbreaks keep being discovered after release',
+      'To speed up the model',
+      'It is required for billing',
+    ],
+    answer: 1,
+    why: 'Jailbreaks evolve continuously. Continuous automated red-teaming lets providers reproduce, mitigate and retest new attacks as they appear.',
+  },
+  {
+    q: 'Which pair of benchmarks best covers BOTH sides of the trade-off?',
+    options: [
+      'HarmBench and JailbreakBench',
+      'XSTest and XSTest',
+      'A jailbreak benchmark (e.g. StrongREJECT) and an over-refusal set (e.g. XSTest)',
+      'MMLU and GSM8K',
+    ],
+    answer: 2,
+    why: 'You need one benchmark for attack success and a separate one for over-refusal. Two attack benchmarks still tell you nothing about false positives.',
+  },
+]} />

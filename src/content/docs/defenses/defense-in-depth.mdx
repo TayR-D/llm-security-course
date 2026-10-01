@@ -61,3 +61,30 @@ but a rerouted, weaker response for exploit *development* (M13, M17).
    What would you change to fix the false positive without letting harm through?
 3. The activation monitor catches the encoded jailbreak that input screening misses. In
    one sentence, why can it see what the input classifier can't?
+
+import Quiz from '../../../components/Quiz.tsx';
+
+<Quiz client:load title="Quick check — M10" questions={[
+  {
+    q: 'Why does the stack REROUTE flagged requests to a weaker model instead of refusing them?',
+    options: [
+      'Weaker models are cheaper only',
+      'To cut over-refusal cost while still denying the dangerous capability',
+      'Because refusing is impossible',
+      'To speed up responses',
+    ],
+    answer: 1,
+    why: 'Over-refusal is a real product cost. Rerouting keeps a benign user moving while still withholding the sensitive capability.',
+  },
+  {
+    q: 'The activation monitor catches an encoded jailbreak that input screening misses. Why can it see what the input classifier cannot?',
+    options: [
+      'It reads the raw bytes faster',
+      'It reads the model’s internal activations (intent), which obfuscated surface text can hide from a text classifier',
+      'It has a bigger keyword list',
+      'It blocks all traffic',
+    ],
+    answer: 1,
+    why: 'Activations reflect the model’s understanding of the request, which is much harder to disguise than the surface string an input filter sees.',
+  },
+]} />

@@ -1,0 +1,94 @@
+---
+title: 'Capstone: guard a security-research platform'
+description: Apply the whole course — design the guardrail and containment stack for a self-hosted, multi-tenant LLM platform running an open-weight model.
+sidebar:
+  order: 20
+---
+
+*Capstone · Part V — Practice*
+
+Time to put it together. Your brief mirrors the hardest real problem in this space — and the one
+you're closest to: a **self-hosted, multi-tenant LLM platform for security research**, running an
+**open-weight model with refusals removed**, an **agent harness**, and **MCP tools**.
+
+This is the frontier labs' trusted-access problem in miniature. Dual-use work *is* the point, so
+you can't lean on the model refusing — the controls shift from refusal to **tenant isolation,
+input/output screening, egress control, containment and audit**. Everything the providers build
+(Parts III–IV), you now build yourself, because no provider safety net is underneath you.
+
+## The brief
+
+Design the safeguard architecture. Four deliverables:
+
+1. **Threat model** — tenants, assets, and what "misuse" means on a platform where offensive
+   security work is legitimate (M1).
+2. **Layered design** — map the controls onto your architecture: identity/tenancy, input
+   screening, output screening, agent containment, monitoring (M5, M10–M14, M18).
+3. **Policy** — what's allowed for whom, and what happens on a flag (reroute? block? log?) (M13).
+4. **Evaluation plan** — the test set and metrics you'll run in CI, reading recall *and*
+   over-refusal (M19).
+
+## Work the checklist
+
+This is the course applied to one system. Each item links to the module behind it; your progress
+is saved in your browser.
+
+import CapstoneChecklist from '../../../components/CapstoneChecklist.tsx';
+
+<CapstoneChecklist client:load />
+
+## The key insight to leave with
+
+On an open-weight, self-hosted deployment, **the model's own refusal is the one layer you don't
+have** (M3, M11). Everything protective is something you add around it — which is exactly why the
+course spent Part III taking the provider stack apart layer by layer. You're rebuilding that stack
+with the pieces from M18, governed by your own threat model.
+
+That's also the honest reframe of your platform's dual-use goal: you're not trying to make the
+model refuse security work (it shouldn't, for your users) — you're making sure a *compromised* or
+*injected* session can't turn your tools and tenant data against you.
+
+import Quiz from '../../../components/Quiz.tsx';
+
+<Quiz client:load title="Capstone check" questions={[
+  {
+    q: 'On your platform the model has no trained-in refusal. Which layer most directly limits the damage of a successful prompt injection?',
+    options: [
+      'A bigger model',
+      'Least agency + egress control (limit what a hijacked agent can reach)',
+      'A longer system prompt',
+      'More training data',
+    ],
+    answer: 1,
+    why: 'You can’t make the context un-injectable (M4). Limiting what the agent can do and where data can go breaks the lethal trifecta even when injection succeeds (M8, M14).',
+  },
+  {
+    q: 'Two tenants share one vector store. What is the main risk, and the fix?',
+    options: [
+      'Higher cost; use a smaller model',
+      'Cross-tenant poisoning/leakage; enforce per-tenant isolation',
+      'Slower queries; add caching',
+      'No risk; embeddings are anonymous',
+    ],
+    answer: 1,
+    why: 'A shared store lets one tenant poison or read another’s retrieval (M9). Per-tenant isolation of data, memory and RAG is a core control on a multi-tenant platform (M13).',
+  },
+  {
+    q: 'Your output guard reports 95% precision. Why is that not enough to ship?',
+    options: [
+      'Precision should be 100%',
+      'Precision says nothing about how many attacks it MISSES (recall)',
+      'Precision is only for images',
+      'It is enough to ship',
+    ],
+    answer: 1,
+    why: 'High precision with low recall waves attacks through (M18). Measure recall/attack-success and over-refusal together before trusting any guard (M19).',
+  },
+]} />
+
+## Where to go next
+
+Beyond this slice, the roadmap's optional pieces deepen the hands-on side: a Docker-based labs
+repo (run guard models, scan an endpoint, configure LlamaFirewall) and a guardrail CTF against a
+simulated stack. Those need a machine with Docker and model access — your self-hosted platform is
+the natural home.
