@@ -60,11 +60,9 @@ export default defineConfig({
         {
           label: 'IV · Guardrails compared',
           items: [
-            {
-              label: 'M17 · Why guardrails differ',
-              slug: 'compared/why-guardrails-differ',
-              badge: { text: 'interactive', variant: 'tip' },
-            },
+            { label: 'M16 · Provider profiles', slug: 'compared/provider-profiles', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M17 · Why guardrails differ', slug: 'compared/why-guardrails-differ', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M18 · Guardrails you can deploy', slug: 'compared/deployable-guardrails', badge: { text: 'interactive', variant: 'tip' } },
           ],
         },
       ],

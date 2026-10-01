@@ -1,0 +1,42 @@
+---
+title: Provider profiles
+description: Each major provider's safeguards on one fixed template — policy source, runtime, access tiers, framework, incidents.
+sidebar:
+  order: 16
+---
+
+*Module 16 · Part IV — Guardrails compared*
+
+Before comparing providers cell-by-cell (M17), read each one whole. This module puts every
+provider on the **same template** so you can see the shape of its approach: what it trains in,
+what it screens at runtime, how it gates access, which framework governs it, and what it changed
+after an incident.
+
+The biggest fault line is **closed API vs open weight**. A closed-API provider stacks safeguards
+it controls end-to-end; an open-weight provider ships you a toolkit and the responsibility —
+which is the world your self-hosted platform lives in.
+
+import ProviderProfiles from '../../../components/ProviderProfiles.tsx';
+
+<ProviderProfiles client:load />
+
+## How to read a profile
+
+Three questions get you most of the way when you assess any provider (or your own stack):
+
+1. **Where do the safeguards live?** In the weights (travels everywhere, can't be patched fast),
+   in runtime classifiers (patchable, adds latency/cost), in the platform (identity, enforcement),
+   or nowhere that survives a download (open weights).
+2. **What happens on a flag?** Hard refuse, safe-complete, or reroute — and who can lift the
+   restriction (access tiers).
+3. **What does the framework require, and who checks it?** The governing framework (M15) and any
+   external testing.
+
+## Check yourself
+
+1. Compare Anthropic and Meta on "Runtime classifiers." Why is one a single sentence about the
+   base model and the other a list of add-on tools?
+2. For the open-weight profiles, which template fields are essentially "whatever the deployer
+   does"? What does that tell you about your capstone's responsibilities?
+3. Which provider is most *developer-configurable* at runtime, and what's the security
+   trade-off of that flexibility?

@@ -1,0 +1,56 @@
+---
+title: Guardrails you can deploy
+description: Open guard models, frameworks and cloud services you can run yourself — and what independent benchmarks say about choosing one.
+sidebar:
+  order: 18
+---
+
+*Module 18 · Part IV — Guardrails compared*
+
+You don't have to be a frontier lab to put guardrails on an LLM app. There's a whole ecosystem of
+**deployable** safeguards — open guard models, orchestration frameworks, and cloud services — that
+you wrap around any model, including a self-hosted open-weight one. This is the most directly
+useful module for your own platform.
+
+- **Open guard models** (classifiers you run): Llama Guard 4, Prompt Guard 2, Qwen3Guard,
+  gpt-oss-safeguard, ShieldGemma, Granite Guardian, Nemotron safety guards.
+- **Frameworks** (wire guards into a pipeline): LlamaFirewall (incl. AlignmentCheck for agents),
+  NeMo Guardrails, Guardrails AI, LLM Guard.
+- **Cloud services** (managed): Amazon Bedrock Guardrails, Azure AI Content Safety with Prompt
+  Shields, Google Model Armor.
+
+## Choosing one isn't obvious
+
+A 2026 benchmark of 14 open guard models found two things worth internalizing: **model size does
+not predict safety** (a 4B guard out-recalled a 20B one), and **precision-optimized guards can
+miss most unsafe content** — high precision with low recall looks great until you realize it's
+waving through the attacks. Pick a guard and set its strictness; watch the confusion matrix and
+the precision/recall tension.
+
+import GuardrailPlayground from '../../../components/GuardrailPlayground.tsx';
+
+<GuardrailPlayground client:load />
+
+## How to actually deploy this
+
+The pattern that works (and the one your capstone will use):
+
+1. **Screen input** with a prompt/injection guard (Prompt Guard 2 / Qwen3Guard) — including on
+   tool and RAG content, not just the user turn (M8).
+2. **Screen output** with a content guard (Llama Guard 4 / ShieldGemma / Granite), judged in the
+   context of the input where the tool allows it.
+3. **Wrap agents** with a framework (LlamaFirewall) for trajectory/alignment checks.
+4. **Measure** before you trust it: run your own test set (M19) and watch recall, not just
+   precision. A guard that only catches the plain cases is theater (M2).
+
+:::tip[For a self-hosted open-weight model]
+Because your model has no trained-in refusal to rely on (M11), these external guards plus
+identity and containment (M13, M14) are most of your safety. Layer them; don't bet on one.
+:::
+
+## Check yourself
+
+1. In the playground, find a guard+strictness with high precision but poor recall. Why is that
+   combination dangerous for a security platform?
+2. Why screen *tool output* with the same guard you use on user input?
+3. Which deployable layer addresses agent *actions* rather than message *content*?
