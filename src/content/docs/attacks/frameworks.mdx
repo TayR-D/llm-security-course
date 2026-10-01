@@ -1,0 +1,53 @@
+---
+title: Frameworks and taxonomies
+description: OWASP's LLM and Agentic Top 10, MITRE ATLAS, and NIST — the shared vocabulary for LLM risk, and what the 2026 re-rank signals.
+sidebar:
+  order: 6
+---
+
+*Module 6 · Part II — The attack landscape*
+
+Before cataloguing attacks, get the shared maps. Four reference frameworks organize this
+field, and knowing which one owns which risk keeps a security conversation precise:
+
+- **OWASP Top 10 for LLM Applications** — risks where the model is a *component* in an app
+  (prompt injection, output handling, disclosure).
+- **OWASP Top 10 for Agentic Applications** — risks once the model *acts*: tools, memory,
+  autonomy (goal hijack, tool misuse, memory poisoning).
+- **MITRE ATLAS** — an adversary-tactics knowledge base for ML systems, in the style of
+  ATT&CK.
+- **NIST AI RMF / adversarial ML taxonomy** — governance and a standard vocabulary for
+  attack classes.
+
+## What the 2026 re-rank tells you
+
+The 2026 OWASP LLM list is the first weighted by real incident data, not just a practitioner
+vote. The movements are a signal about where harm is actually landing. Explore them below.
+
+import OwaspRerank from '../../../components/OwaspRerank.tsx';
+
+<OwaspRerank client:load />
+
+## Reading the signal
+
+- **Excessive Agency's jump to #3** is the headline: agents acting on real systems are now
+  where damage concentrates. The whole of Part III's agentic defenses (M14) follow from this.
+- **Prompt Injection stays #1 despite few public incidents.** OWASP calls this a "defense
+  effect" — teams spend heavily to keep it rare, which hides how dangerous it remains.
+- **The hard boundary:** the LLM Top 10 covers the model-as-component. The moment it has
+  tools, memory and authority to act, risk moves to the Agentic Top 10. The course mirrors
+  that split: Part II attacks here, agentic defense in M14.
+
+:::tip[Use it as a checklist]
+These lists are most useful as a shared checklist between you and a team. When you threat-model
+your own system (M1, the capstone), walk each entry and ask "where does this live in my
+architecture?" (M5).
+:::
+
+## Check yourself
+
+1. Why does weighting by incident data push *Misinformation* up but leave *Prompt Injection*
+   at #1 despite few incidents?
+2. A risk involves an agent sending money based on a poisoned document. Which framework owns
+   it — LLM Top 10 or Agentic Top 10? Why?
+3. Name one thing MITRE ATLAS gives you that the OWASP lists don't.

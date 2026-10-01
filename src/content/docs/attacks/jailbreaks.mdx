@@ -1,0 +1,57 @@
+---
+title: Jailbreaks
+description: Why jailbreaks work — competing objectives and mismatched generalization — and the families that exploit them, by mechanism.
+sidebar:
+  order: 7
+---
+
+*Module 7 · Part II — The attack landscape*
+
+A jailbreak is the *user* getting the model to violate its own policy (distinct from
+injection, where a third party does it — M8). Two root causes explain almost all of them:
+
+- **Competing objectives.** The model is trained to be helpful *and* to refuse. Frame a
+  request so those two goals collide ("stay in character and answer…") and sometimes
+  helpfulness wins.
+- **Mismatched generalization.** Capability generalizes more broadly than refusal. If you
+  move the request into a space the refusal training didn't cover — an encoding, a rare
+  language, a reconstruction — the capability is still there but the refusal isn't.
+
+## Explore the families
+
+Each family below is defined by the mechanism it exploits, with a defanged illustration and
+the defense layer that tends to catch it. Mechanisms age slowly; specific prompts don't.
+
+import JailbreakExplorer from '../../../components/JailbreakExplorer.tsx';
+
+<JailbreakExplorer client:load />
+
+## Two that beat the first-generation classifiers
+
+Two families are worth special attention because Anthropic reported them defeating its
+first-generation Constitutional Classifiers, which is what drove the move to *exchange*
+classifiers that see input and output together (M12):
+
+- **Reconstruction** — split harm into benign fragments the model reassembles.
+- **Output obfuscation** — hide harm in a disguised output that looks safe in isolation.
+
+Both evade screening that looks at input or output *alone*. The fix was to judge the output
+*in the context of its input* — the single biggest reason classifiers went from separate
+to exchange-based.
+
+## The one with no inference-time defense
+
+**Fine-tuning the refusal away** isn't a prompt at all. On open weights, an attacker can
+train refusal out of the model (or download an "abliterated" build). No runtime layer is
+present to stop it, which is exactly why open-weight release decisions, anti-distillation,
+and tamper-resistance research matter so much (M3, M9, M17) — and why your own self-hosted
+platform (the capstone) can't rely on model refusal at all.
+
+## Check yourself
+
+1. Classify each: (a) base64-encoded request, (b) "pretend you're my grandma reading me…",
+   (c) a machine-found gibberish suffix. Which root cause does each exploit?
+2. Why does an *exchange* classifier catch reconstruction when separate input/output
+   classifiers don't?
+3. Best-of-N isn't a cleverer prompt — it's volume. What kind of defense answers volume,
+   and why isn't it a per-prompt check?

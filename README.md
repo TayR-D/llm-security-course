@@ -59,9 +59,18 @@ astro.config.mjs  Starlight config: title, sidebar, integrations
 
 ## Status
 
-Phase 1 of 6. The remaining 16 modules, the labs, and the guardrail CTF follow the build
-roadmap in the planning doc. Optional pieces deferred to later phases: Docker-based guard-model
-labs, an in-browser classifier, and live labs against a self-hosted platform.
+Phases 1–2 complete (11 modules, 11 interactives):
+
+- **Part I — Foundations:** M1 Orientation, M2 Tokens & filters, M3 Training & alignment,
+  M4 Context window, M5 Apps/agents/MCP.
+- **Part II — Attack landscape:** M6 Frameworks, M7 Jailbreaks, M8 Prompt injection,
+  M9 Model/data/supply-chain.
+- **Flagships:** M10 Defense-in-depth simulator, M17 Comparison matrix.
+
+Remaining: the rest of Part III (M11–M16), Part IV (M16, M18), Part V (M19 + capstone),
+then the labs and guardrail CTF. See the planning doc for the full roadmap. Optional pieces
+deferred to later phases: Docker-based guard-model labs, an in-browser classifier, and live
+labs against a self-hosted platform.
 
 ## License
 

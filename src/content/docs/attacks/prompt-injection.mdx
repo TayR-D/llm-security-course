@@ -1,0 +1,60 @@
+---
+title: Prompt injection and agent hijacking
+description: Direct vs indirect injection, the lethal trifecta, and how a hidden instruction turns an agent into the attacker's tool.
+sidebar:
+  order: 8
+---
+
+*Module 8 · Part II — The attack landscape*
+
+Prompt injection is the #1 risk on the OWASP LLM list (M6), and it's a different beast from a
+jailbreak. In a jailbreak the *user* is the attacker. In **injection**, the attacker's text
+rides in through content the system reads — a web page, an email, a document, a tool result —
+and competes with your instructions because it all lands in one context (M4).
+
+- **Direct injection:** the user pastes the malicious instruction themselves.
+- **Indirect injection:** the instruction hides in third-party content the agent processes.
+  This is the dangerous one for agents, because the user never sees it.
+
+## The lethal trifecta
+
+Indirect injection becomes real harm only when three things are true at once:
+
+1. the agent has access to **private data**,
+2. it can be exposed to **untrusted content**, and
+3. there's an **exfiltration channel** out.
+
+Break any one leg and the exploit fails. That's the whole defensive strategy for agents —
+because you can't make the model un-foolable (M4). Try it:
+
+import AgentHijackSim from '../../../components/AgentHijackSim.tsx';
+
+<AgentHijackSim client:load />
+
+## Where injection enters (and why it's missed)
+
+Everything red on the M5 attack-surface map is an injection vector: retrieved documents, tool
+output, MCP responses, memory, and anything on screen during computer use. Tool output is the
+most-missed, because developers instinctively trust "their own" tool — but a tool that
+returns attacker-influenced data (a search result, a fetched page, a database row a user
+controls) is untrusted input.
+
+MCP adds its own twist: a server's *tool descriptions* are attacker-controllable, so a
+malicious or compromised server can inject through the very schema the model reads to decide
+what to call (tool poisoning, rug-pulls).
+
+## Defenses, in order of leverage
+
+- **Least agency** — the highest-leverage control. If the agent can't perform the dangerous
+  action, no injection can make it.
+- **Egress controls** — allow-list outbound destinations so data can't leave to an attacker.
+- **Screen untrusted content** — injection classifiers on tool/RAG content before the model
+  acts (M12).
+- **Human confirmation** — for high-risk actions, a person in the loop.
+
+## Check yourself
+
+1. In the simulator, which single defense stops the attack *earliest* in the trace? Why is
+   "least agency" so powerful?
+2. Give a realistic example where "tool output" is actually attacker-controlled.
+3. Why is indirect injection more dangerous in an agent than direct injection in a chatbot?

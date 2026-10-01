@@ -1,0 +1,58 @@
+---
+title: Model, data and supply-chain threats
+description: Poisoning, extraction, distillation and RAG attacks — the threats to the model and its data pipeline, not just the prompt.
+sidebar:
+  order: 9
+---
+
+*Module 9 · Part II — The attack landscape*
+
+Not every attack goes through the prompt. Some target the model's weights, its training data,
+or its retrieval pipeline — often before the model ever serves a request. These are quieter
+and harder to catch, because the damage is baked in upstream.
+
+- **Data poisoning & backdoors** — corrupt training or fine-tuning data so the model learns a
+  hidden trigger or a skewed behavior. The 2026 OWASP entry now explicitly includes
+  *fine-tuning subversion* (M6).
+- **Training-data extraction** — coax memorized secrets or personal data back out of the
+  model.
+- **Model extraction & distillation** — query a model at scale to train a cheaper copy. A
+  distilled copy can ship *without the original's safeguards*, which is why providers now treat
+  distillation as a safety risk and add anti-distillation measures (M3, M13).
+- **Weight theft** — the top prize for a resourced actor; what frontier security levels are
+  built to defend (M15).
+- **Supply chain** — compromised base models, adapters, datasets, or unsafe model files
+  (e.g. pickle-based formats that execute code on load).
+- **RAG / vector-store poisoning** — add a chunk to a knowledge base so it gets retrieved for a
+  target query and injects once in context.
+
+## See RAG poisoning
+
+The RAG case is worth seeing, because it ties this module back to injection (M8): poisoning
+the store is how indirect injection gets *delivered* at retrieval time. The attacker doesn't
+need to be in the conversation — just in the index.
+
+import EmbeddingPoisoning from '../../../components/EmbeddingPoisoning.tsx';
+
+<EmbeddingPoisoning client:load />
+
+## Why these are hard
+
+Prompt-time attacks are at least *observable* at inference. These upstream threats are not:
+a backdoor or a poisoned chunk sits dormant until its trigger. Defenses are mostly about
+**provenance and isolation**, not runtime classifiers:
+
+- trusted, verified ingestion for training data and RAG sources;
+- per-tenant isolation so one tenant can't poison another's retrieval (relevant to your
+  multi-tenant capstone);
+- signed, safe model formats and dependency pinning;
+- screening retrieved content before use, as a backstop.
+
+## Check yourself
+
+1. Why is a *distilled* copy of a safe model a safety problem, even if the original is well
+   guarded?
+2. In the RAG demo, why does the poisoned chunk get retrieved for the refund query but not the
+   API query? What does that tell you about how targeted these attacks are?
+3. For a multi-tenant platform, which of these threats does per-tenant isolation address, and
+   which does it not?

@@ -38,6 +38,15 @@ export default defineConfig({
           ],
         },
         {
+          label: 'II · The attack landscape',
+          items: [
+            { label: 'M6 · Frameworks & taxonomies', slug: 'attacks/frameworks', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M7 · Jailbreaks', slug: 'attacks/jailbreaks', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M8 · Prompt injection & agent hijacking', slug: 'attacks/prompt-injection', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M9 · Model, data & supply-chain threats', slug: 'attacks/supply-chain', badge: { text: 'interactive', variant: 'tip' } },
+          ],
+        },
+        {
           label: 'III · How providers defend',
           items: [
             {
