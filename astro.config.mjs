@@ -30,11 +30,11 @@ export default defineConfig({
         {
           label: 'I · Foundations',
           items: [
-            {
-              label: 'M4 · The context window is one string',
-              slug: 'foundations/context-window',
-              badge: { text: 'interactive', variant: 'tip' },
-            },
+            { label: 'M1 · Orientation & threat model', slug: 'foundations/orientation', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M2 · Tokens, filters & encodings', slug: 'foundations/tokens-and-filters', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M3 · Training & alignment', slug: 'foundations/training-and-alignment', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M4 · The context window is one string', slug: 'foundations/context-window', badge: { text: 'interactive', variant: 'tip' } },
+            { label: 'M5 · Apps, agents & MCP', slug: 'foundations/apps-agents-mcp', badge: { text: 'interactive', variant: 'tip' } },
           ],
         },
         {

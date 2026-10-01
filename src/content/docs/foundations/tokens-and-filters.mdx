@@ -1,0 +1,47 @@
+---
+title: Tokens, filters, and why encodings slip through
+description: How text becomes tokens, and why a string filter and a model read the same bytes differently.
+sidebar:
+  order: 2
+---
+
+*Module 2 · Part I — Foundations*
+
+A model never sees your text. It sees **tokens** — integer IDs for chunks of bytes, produced
+by a tokenizer before the model runs. A keyword filter, meanwhile, works on the raw
+**string**. That mismatch is a recurring source of bypasses: transform the text so a filter's
+substring match fails, while a capable model still recovers the meaning.
+
+## See the mismatch
+
+Pick an obfuscation and watch two things: whether a naive keyword filter still matches, and
+how the token boundaries change. Everything here stays readable to a human.
+
+import TokenizerLab from '../../../components/TokenizerLab.tsx';
+
+<TokenizerLab client:load />
+
+## Why this matters for defenses
+
+- **Naive string filters are brittle.** Homoglyphs, zero-width characters, spacing and
+  encodings all defeat substring matching while preserving meaning. This is the same bug
+  class as a WAF that normalizes differently from the app behind it (M4).
+- **Normalization is a real defense, not a cure.** Collapsing whitespace, mapping
+  homoglyphs to their Latin forms, and stripping invisible characters raises the bar — but
+  there is always another transform. Robust input screening uses *classifiers* that judge
+  intent, not keyword lists (M12).
+- **Capability cuts both ways.** The better a model is at decoding garbled or encoded text,
+  the more an obfuscation that dodges your filter still lands on a model that understands it.
+
+:::tip[For your own tooling]
+If you build input filters for an LLM app, test them against the obfuscations above before
+you trust them. A filter that only catches the plain string is theater.
+:::
+
+## Check yourself
+
+1. Why does "spaced letters" shatter the token stream but a human still reads it fine?
+2. Your filter strips whitespace before matching. Name two obfuscations in the lab that still
+   get through.
+3. If naive filters are this weak, why do providers still run input classifiers at all?
+   (Foreshadows M12.)

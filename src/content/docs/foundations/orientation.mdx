@@ -1,0 +1,56 @@
+---
+title: Orientation and threat model
+description: Who attacks LLMs and why — the actors, the harms, and the vocabulary the rest of the course uses.
+sidebar:
+  order: 1
+---
+
+*Module 1 · Part I — Foundations*
+
+Before any mechanism, get the map. LLM security is the overlap of three things people often
+conflate:
+
+- **Safety** — the model avoiding harmful *content* (the model's own behavior).
+- **Security** — protecting the *system* around the model (data, tools, accounts, weights).
+- **Misuse prevention** — stopping a determined person from getting *capability* the
+  provider chose to withhold.
+
+A guardrail can serve one of these and do nothing for the others. Keeping those apart is
+half of thinking clearly here.
+
+## Who attacks, and for what
+
+The right defense depends on the attacker. A curious user who stumbles into a leak needs a
+different answer than a state-backed team after model weights. Tap through the matrix to see
+how the actor changes both the harm and the defense that matters.
+
+import ThreatMatrix from '../../../components/ThreatMatrix.tsx';
+
+<ThreatMatrix client:load />
+
+## The vocabulary
+
+The terms below recur throughout. Precise use of them is what separates a useful security
+conversation from a vague one.
+
+- **Guardrail / safeguard** — any control that constrains model behavior. Umbrella term.
+- **Alignment** — training the model to *want* to behave well (M3). A property of the model.
+- **Moderation / classifier** — a separate system that screens inputs or outputs (M12).
+- **Jailbreak** — getting the model to violate its *own* policy (M7).
+- **Prompt injection** — untrusted content hijacking the model's instructions (M4, M8).
+- **Misuse** — using the model for harm it will *willingly* help with absent safeguards.
+
+:::note[Jailbreak ≠ prompt injection]
+A jailbreak is the *user* tricking the model into breaking its rules. Prompt injection is a
+*third party's* text (in a document, a web page, a tool result) doing it. Different attacker,
+different trust boundary, different defense. The course keeps them separate.
+:::
+
+## Check yourself
+
+1. A chatbot reveals its own system prompt when asked nicely. Safety problem, security
+   problem, or misuse? Which actor in the matrix cares most?
+2. Why does "the agent itself" appear as an actor? What does it mean for an attacker to not
+   be a person at all?
+3. Give one harm where the right defense is *not* in the model but in the account/identity
+   layer.

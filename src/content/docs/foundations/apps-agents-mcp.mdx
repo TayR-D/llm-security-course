@@ -1,0 +1,51 @@
+---
+title: Apps, agents and MCP — the attack surface
+description: Chat, RAG, tools, MCP and computer use — the components of a modern agent and the trust boundaries between them.
+sidebar:
+  order: 5
+---
+
+*Module 5 · Part I — Foundations*
+
+The context window (M4) explains why one component is dangerous. This module zooms out to the
+whole system. A modern deployment is rarely just a model and a user — it's a model wired to
+retrievers, tools, MCP servers, memory, and sometimes a live desktop. Every one of those is a
+place untrusted data can enter, and every tool is a place the model can *act*.
+
+## Map the surface
+
+Tap each component. The ones marked red feed **untrusted input** into the same context the
+model trusts; the ones at a **trust boundary** are where a successful injection turns into a
+real action.
+
+import AttackSurfaceMap from '../../../components/AttackSurfaceMap.tsx';
+
+<AttackSurfaceMap client:load />
+
+## The two questions that organize everything
+
+For any LLM system, two questions locate most of the risk:
+
+1. **Where does untrusted data enter the context?** Retrieved documents, tool output, MCP
+   responses, memory, and anything on a screen during computer use are all attacker-reachable.
+   This is the prompt-injection surface (M8).
+2. **What can the model *do*?** Every tool, credential and action widens the blast radius of a
+   successful injection. The 2026 OWASP list moved "Excessive Agency" up precisely because
+   agents now act on real systems (M6).
+
+The modern defensive posture follows from these: since you can't make the context un-injectable
+(M4), you **limit what a successful injection can reach** — least agency, egress controls,
+confirmations, containment (M10, M14).
+
+:::note[For the capstone]
+Keep this map in mind. The Part V capstone asks you to secure a self-hosted agent platform,
+and it's essentially this diagram with your own tools and trust boundaries filled in.
+:::
+
+## Check yourself
+
+1. Which components here are untrusted input but are easy to *mistake* for trusted? Why is
+   tool output in that category?
+2. An agent can read email and send email, with no egress limits. Walk the path from a
+   poisoned incoming email to data exfiltration.
+3. Why does adding a tool raise risk even if the tool itself is perfectly safe?

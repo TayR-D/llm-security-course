@@ -1,0 +1,45 @@
+---
+title: How models are trained and aligned
+description: Pretraining, fine-tuning, RLHF and Constitutional AI — and where each safety property enters, plus what it can't guarantee.
+sidebar:
+  order: 3
+---
+
+*Module 3 · Part I — Foundations*
+
+"Why doesn't the model just refuse?" hides a wrong assumption: that refusal is a rule
+somewhere in the code. It isn't. Refusal is a **learned behavior**, added in stages during
+training, and like everything learned it's a strong tendency rather than a guarantee. Knowing
+which stage adds which property tells you exactly where each attack (and each defense) applies.
+
+## Walk the pipeline
+
+Step through the stages. At each one, note the safety property that enters — and the gap it
+leaves for the next stage, or for the runtime safeguards, to cover.
+
+import TrainingPipeline from '../../../components/TrainingPipeline.tsx';
+
+<TrainingPipeline client:load />
+
+## The key consequences
+
+- **The base model will answer almost anything.** Pretraining builds capability, not
+  refusal. Everything protective comes later — which is why an open-weight model with its
+  alignment fine-tuned away is so different from the same weights behind an API (M9, M17).
+- **Refusal generalizes imperfectly.** RLHF and Constitutional AI push refusal beyond the
+  hand-written examples, but "mismatched generalization" — the model generalizing capability
+  more broadly than it generalizes refusal — is exactly the seam jailbreaks exploit (M7).
+- **The policy source is a document.** Modern alignment optimizes against an explicit spec or
+  constitution. That same document often trains the runtime classifiers too (M11, M12), which
+  is why a provider's written policy is worth reading closely.
+- **Safeguards you can update without retraining live outside the weights.** That's the whole
+  point of the deployment layer (M10) — and the reason it can't protect a downloaded model.
+
+## Check yourself
+
+1. At which stage does the model first learn to refuse? Why isn't that stage enough on its
+   own?
+2. "Constitutional AI" replaces human preference labels with what? Why does that matter for
+   scaling alignment?
+3. A reasoning model can reason about safety policy at inference time. Give one way that extra
+   capability could *weaken* safety, not strengthen it. (Foreshadows M14.)
