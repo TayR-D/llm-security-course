@@ -95,8 +95,8 @@ export default function JailbreakExplorer() {
   const sel = FAMILIES.find((f) => f.id === selId)!;
 
   return (
-    <div className="wg">
-      <h3>Jailbreak family explorer</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Explorer">Jailbreak family explorer</h3>
       <p className="wg-note">
         Jailbreaks are organized here by the <em>mechanism</em> they exploit, not the exact
         wording — because mechanisms age slowly and wordings don&apos;t. Examples are described
@@ -144,18 +144,18 @@ export default function JailbreakExplorer() {
         @media (max-width: 720px) { .je-grid { grid-template-columns: 1fr; } }
         .je-list { display: flex; flex-direction: column; gap: 0.3rem; }
         .je-fam { text-align: left; font: inherit; font-size: 0.84rem; font-weight: 600;
-          border: 1px solid var(--wg-border); border-radius: 7px; background: var(--wg-surface-raised);
+          border: 1px solid var(--wg-border); border-radius: var(--r-md); background: var(--wg-surface-raised);
           padding: 0.45rem 0.55rem; cursor: pointer; }
         .je-fam.is-sel { background: var(--wg-accent-soft); border-color: var(--wg-accent); }
         @media (max-width: 720px) { .je-list { flex-direction: row; flex-wrap: wrap; } .je-fam { flex: none; } }
-        .je-detail { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.7rem 0.8rem; background: var(--wg-surface); }
+        .je-detail { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.7rem 0.8rem; background: var(--wg-surface); }
         .je-detail h4 { margin: 0 0 0.4rem; }
-        .je-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--wg-ink-quiet);
+        .je-label { font-size: 0.72rem; color: var(--wg-ink-quiet);
           font-weight: 700; margin: 0.6rem 0 0.15rem; }
         .je-example { background: var(--wg-surface-raised); border: 1px solid var(--wg-border); border-left: 3px solid var(--wg-warn);
-          border-radius: 6px; padding: 0.5rem; font-size: 0.8rem; margin: 0; }
+          border-radius: var(--r-sm); padding: 0.5rem; font-size: 0.8rem; margin: 0; }
         .je-chip { font-size: 0.76rem; border: 1px solid var(--wg-accent); background: var(--wg-accent-soft);
-          border-radius: 999px; padding: 0.05rem 0.5rem; }
+          border-radius: var(--r-sm); padding: 0.05rem 0.5rem; }
       `}</style>
     </div>
   );

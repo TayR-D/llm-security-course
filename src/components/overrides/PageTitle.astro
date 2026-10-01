@@ -1,0 +1,37 @@
+---
+// Lesson header: part + position in the course above the title.
+import { findModule, TOTAL_MODULES } from '../../data/course.mjs';
+
+const { entry } = Astro.locals.starlightRoute;
+const found = findModule(entry.id);
+const pct = found?.module.n ? Math.round((found.module.n / TOTAL_MODULES) * 100) : 100;
+---
+
+{
+  found && (
+    <p class="itg-title-meta">
+      <span class="itg-part">
+        Part {found.part.roman}: {found.part.name}
+      </span>
+      <span class="itg-step">
+        {found.module.n ? `Module ${found.module.n} of ${TOTAL_MODULES}` : 'Capstone'}
+      </span>
+      <span class="itg-progress" aria-hidden="true">
+        <span style={`width:${pct}%`} />
+      </span>
+    </p>
+  )
+}
+<h1 id="_top">{entry.data.title}</h1>
+
+<style>
+  h1 {
+    margin-top: 0.25rem;
+    font-size: var(--sl-text-h1);
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+</style>

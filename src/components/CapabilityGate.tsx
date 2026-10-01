@@ -61,8 +61,8 @@ export default function CapabilityGate() {
   const om = OUT_META[result.outcome];
 
   return (
-    <div className="wg">
-      <h3>Capability gate</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Simulator">Capability gate</h3>
       <p className="wg-note">
         Modern safeguards gate on <em>identity</em>, not just the request. The same ask can be
         answered in full, rerouted to a weaker model, or refused depending on who is verified.
@@ -109,11 +109,11 @@ export default function CapabilityGate() {
         @media (max-width: 640px) { .cg-controls { grid-template-columns: 1fr; } }
         .cg-label { font-weight: 700; font-size: 0.8rem; margin: 0 0 0.35rem; }
         .cg-opt { text-align: left; font: inherit; display: flex; flex-direction: column; gap: 0.15rem;
-          border: 1px solid var(--wg-border); border-radius: 7px; background: var(--wg-surface-raised);
+          border: 1px solid var(--wg-border); border-radius: var(--r-md); background: var(--wg-surface-raised);
           padding: 0.45rem 0.55rem; cursor: pointer; }
         .cg-opt.is-sel { border-color: var(--wg-accent); background: var(--wg-accent-soft); }
         .cg-opt-name { font-weight: 600; font-size: 0.84rem; }
-        .cg-outcome { border-radius: 8px; padding: 0.6rem 0.7rem; background: var(--wg-surface); }
+        .cg-outcome { border-radius: var(--r-md); padding: 0.6rem 0.7rem; background: var(--wg-surface); }
         .cg-outcome.cg-good { background: var(--wg-good-soft); }
         .cg-outcome.cg-warn { background: var(--wg-warn-soft); }
         .cg-outcome.cg-bad { background: var(--wg-bad-soft); }

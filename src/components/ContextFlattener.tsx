@@ -105,8 +105,8 @@ export default function ContextFlattener() {
   );
 
   return (
-    <div className="wg">
-      <h3>Context flattener</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Lab">Context flattener</h3>
       <p className="wg-note">
         Build a conversation, then look at what the model actually receives. Everything —
         including the role markers and any mitigation — becomes tokens in one stream.
@@ -222,21 +222,21 @@ export default function ContextFlattener() {
       <style>{`
         .cf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         @media (max-width: 720px) { .cf-grid { grid-template-columns: 1fr; } }
-        .cf-seg { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.5rem; background: var(--wg-surface); }
+        .cf-seg { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.5rem; background: var(--wg-surface); }
         .cf-seg.cf-untrusted { border-left: 3px solid var(--wg-bad); }
         .cf-seg.cf-trusted { border-left: 3px solid var(--wg-good); }
         .cf-seg-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
         .cf-role { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; font-size: 0.85rem; }
         .cf-x { padding: 0.1rem 0.45rem; line-height: 1; }
-        .cf-input { width: 100%; resize: vertical; border: 1px solid var(--wg-border); border-radius: 6px;
+        .cf-input { width: 100%; resize: vertical; border: 1px solid var(--wg-border); border-radius: var(--r-sm);
           background: var(--wg-surface-raised); color: var(--wg-ink); padding: 0.4rem; font-size: 0.82rem; }
-        .cf-stream { border: 1px solid var(--wg-border); border-radius: 8px; background: var(--wg-surface);
+        .cf-stream { border: 1px solid var(--wg-border); border-radius: var(--r-md); background: var(--wg-surface);
           padding: 0.6rem; min-height: 8rem; white-space: pre-wrap; word-break: break-word; font-size: 0.82rem; }
         .cf-tok.cf-marker { color: var(--wg-accent); }
         .cf-tok.cf-trusted { color: var(--wg-ink); }
-        .cf-tok.cf-untrusted { background: var(--wg-bad-soft); color: var(--wg-ink); border-radius: 3px; }
+        .cf-tok.cf-untrusted { background: var(--wg-bad-soft); color: var(--wg-ink); border-radius: var(--r-sm); }
         .cf-tok.cf-fence { color: var(--wg-warn); }
-        .cf-verdict { margin-top: 0.6rem; padding: 0.55rem 0.7rem; border-radius: 8px; font-size: 0.84rem; }
+        .cf-verdict { margin-top: 0.6rem; padding: 0.55rem 0.7rem; border-radius: var(--r-md); font-size: 0.84rem; }
         .cf-verdict.cf-risk { background: var(--wg-bad-soft); }
         .cf-verdict.cf-clear { background: var(--wg-good-soft); }
       `}</style>

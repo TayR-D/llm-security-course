@@ -93,11 +93,30 @@ export default function GuardrailStackSimulator() {
     setEnabled(Object.fromEntries(LAYERS.map((l) => [l.id, false])) as Record<LayerId, boolean>);
   }
 
-  const om = OUTCOME_META[result.outcome];
+  // Colour reflects whether the outcome is RIGHT for this request, not the outcome alone:
+  // a benign request allowed through is a success; a benign request stopped is over-refusal.
+  const harmful = scenario.intent !== 'benign';
+  const stopped = result.outcome === 'blocked' || result.outcome === 'rerouted';
+  const verdictPill: 'good' | 'warn' | 'bad' = harmful
+    ? result.outcome === 'blocked'
+      ? 'good'
+      : result.outcome === 'rerouted'
+        ? 'warn'
+        : 'bad'
+    : stopped
+      ? 'bad'
+      : 'good';
+  const om = { ...OUTCOME_META[result.outcome], pill: verdictPill };
+  const INTENT_META = {
+    benign: { label: 'Benign', pill: 'good' },
+    'dual-use': { label: 'Dual-use', pill: 'warn' },
+    malicious: { label: 'Malicious', pill: 'bad' },
+  } as const;
+  const intent = INTENT_META[scenario.intent];
 
   return (
-    <div className="wg">
-      <h3>Guardrail stack simulator</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Simulator">Guardrail stack simulator</h3>
       <p className="wg-note">
         Turn defense layers on or off, pick a defanged test request, and see where the
         stack catches it — and what benign requests it wrongly stops (the over-refusal
@@ -149,9 +168,12 @@ export default function GuardrailStackSimulator() {
 
         {/* Request + result column */}
         <div className="gs-right">
-          <label className="gs-select-label" htmlFor="gs-scenario">
-            Test request
-          </label>
+          <div className="gs-select-head">
+            <label className="gs-select-label" htmlFor="gs-scenario">
+              Test request
+            </label>
+            <span className={`wg-pill ${intent.pill}`}>{intent.label}</span>
+          </div>
           <select
             id="gs-scenario"
             className="gs-select"
@@ -160,7 +182,6 @@ export default function GuardrailStackSimulator() {
           >
             {SCENARIOS.map((s) => (
               <option key={s.id} value={s.id}>
-                {s.intent === 'benign' ? '🟢 ' : s.intent === 'dual-use' ? '🟡 ' : '🔴 '}
                 {s.label}
               </option>
             ))}
@@ -202,11 +223,11 @@ export default function GuardrailStackSimulator() {
                 <span className="wg-note">harmful caught</span>
               </div>
               <div className="gs-stat">
-                <span className="gs-num gs-bad-num">{summary.leaked}</span>
+                <span className={`gs-num ${summary.leaked ? 'gs-bad-num' : 'gs-zero'}`}>{summary.leaked}</span>
                 <span className="wg-note">harmful leaked</span>
               </div>
               <div className="gs-stat">
-                <span className="gs-num gs-warn-num">{summary.over}</span>
+                <span className={`gs-num ${summary.over ? 'gs-warn-num' : 'gs-zero'}`}>{summary.over}</span>
                 <span className="wg-note">benign over-refused</span>
               </div>
             </div>
@@ -229,16 +250,17 @@ export default function GuardrailStackSimulator() {
       <style>{`
         .gs-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 1rem; }
         @media (max-width: 760px) { .gs-grid { grid-template-columns: 1fr; } }
-        .gs-layer { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.5rem 0.6rem; margin-top: 0.5rem; background: var(--wg-surface); }
+        .gs-layer { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.5rem 0.6rem; margin-top: 0.5rem; background: var(--wg-surface); }
         .gs-layer.gs-off { opacity: 0.5; }
         .gs-layer.gs-caught { border-color: var(--wg-accent); box-shadow: 0 0 0 1px var(--wg-accent) inset; }
         .gs-layer-name { font-weight: 600; font-size: 0.86rem; }
         .gs-tag { color: var(--wg-warn); font-style: normal; font-size: 0.72rem; font-weight: 600; }
         .gs-layer-blurb { margin: 0.3rem 0 0.4rem; }
-        .gs-select-label { font-weight: 600; font-size: 0.85rem; display: block; margin-bottom: 0.3rem; }
-        .gs-select { width: 100%; padding: 0.45rem 0.5rem; border-radius: 8px; border: 1px solid var(--wg-border);
+        .gs-select-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.35rem; }
+        .gs-select-label { font-weight: 600; font-size: 0.85rem; }
+        .gs-select { width: 100%; padding: 0.45rem 0.5rem; border-radius: var(--r-md); border: 1px solid var(--wg-border);
           background: var(--wg-surface-raised); color: var(--wg-ink); font: inherit; font-size: 0.85rem; }
-        .gs-outcome { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.6rem 0.7rem; margin-top: 0.6rem; }
+        .gs-outcome { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.6rem 0.7rem; margin-top: 0.6rem; }
         .gs-outcome.gs-good { background: var(--wg-good-soft); }
         .gs-outcome.gs-warn { background: var(--wg-warn-soft); }
         .gs-outcome.gs-bad { background: var(--wg-bad-soft); }
@@ -251,6 +273,7 @@ export default function GuardrailStackSimulator() {
         .gs-good-num { color: var(--wg-good); }
         .gs-bad-num { color: var(--wg-bad); }
         .gs-warn-num { color: var(--wg-warn); }
+        .gs-zero { color: var(--ink-3); }
       `}</style>
     </div>
   );

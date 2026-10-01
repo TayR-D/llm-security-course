@@ -1,121 +1,787 @@
-/* Inside the Guardrails — theme + shared interactive widget styles.
-   Colors are defined as tokens that follow Starlight's light/dark themes,
-   so every interactive reads correctly in both without per-widget overrides. */
+/* ==========================================================================
+   Inside the Guardrails — design system
+   Direction: highway engineering. Quiet, legible infrastructure set in
+   Overpass (the open descendant of Highway Gothic), slate ink on porcelain,
+   cobalt for anything you can act on, and one safety-yellow reserved for the
+   guardrail mark. Verdict colours (allow / reroute / block) carry meaning only.
 
+   Unlayered on purpose: Starlight ships in @layer, so these rules win cleanly.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens. Dark is the base (matches Starlight); light overrides.
+   -------------------------------------------------------------------------- */
 :root {
-  /* Accent (teal/blue security palette) mapped onto Starlight's accent slots */
-  --sl-color-accent-low: #c7f9ff;
-  --sl-color-accent: #0a7ea4;
-  --sl-color-accent-high: #063d50;
+  --font-sans: 'Overpass Variable', 'Overpass', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Overpass Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* Widget tokens — light theme.
-     NOTE: use explicit hex, not Starlight's --sl-color-black/white/gray tokens,
-     which invert between themes and would flip our ink to white in light mode. */
-  --wg-surface: #f3f4f7;
-  --wg-surface-raised: #ffffff;
-  --wg-border: #c9ced7;
-  --wg-ink: #17181c;
-  --wg-ink-quiet: #545862;
-  --wg-accent: #0a7ea4;
-  --wg-accent-soft: rgba(10, 126, 164, 0.12);
-  --wg-good: #1a7f47;
-  --wg-good-soft: rgba(26, 127, 71, 0.12);
-  --wg-warn: #9a6700;
-  --wg-warn-soft: rgba(154, 103, 0, 0.14);
-  --wg-bad: #b3261e;
-  --wg-bad-soft: rgba(179, 38, 30, 0.12);
-  --wg-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
-  --wg-radius: 10px;
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.75rem;
+
+  --barrier: #f5b301;          /* safety yellow — guardrail mark only */
+  --barrier-ink: #1b1608;
+
+  /* dark */
+  --ink: #eef1f5;
+  --ink-2: #a9b3c1;
+  --ink-3: #7c8797;
+  --page: #121820;
+  --surface: #171e28;
+  --surface-2: #1d2531;
+  --sunken: #10161e;
+  --rule: #29323f;
+  --rule-strong: #3a4554;
+  --action: #93a6ff;
+  --action-ink: #0d1430;
+  --action-soft: rgba(147, 166, 255, 0.14);
+  --allow: #57c793;
+  --allow-soft: rgba(87, 199, 147, 0.14);
+  --reroute: #f2b35a;
+  --reroute-soft: rgba(242, 179, 90, 0.15);
+  --block: #f4847b;
+  --block-soft: rgba(244, 132, 123, 0.14);
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 
-:root[data-theme='dark'] {
-  --wg-surface: #1c1f26;
-  --wg-surface-raised: #23272f;
-  --wg-border: #3a404b;
-  --wg-ink: #eceef2;
-  --wg-ink-quiet: #a4abb8;
-  --wg-accent: #4fc3e8;
-  --wg-accent-soft: rgba(79, 195, 232, 0.16);
-  --wg-good: #5fd08a;
-  --wg-good-soft: rgba(95, 208, 138, 0.16);
-  --wg-warn: #e5b567;
-  --wg-warn-soft: rgba(229, 181, 103, 0.18);
-  --wg-bad: #f08a82;
-  --wg-bad-soft: rgba(240, 138, 130, 0.16);
+:root[data-theme='light'] {
+  --ink: #18202b;
+  --ink-2: #4a5565;
+  --ink-3: #6f7a89;
+  --page: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f5f7fa;
+  --sunken: #f5f7fa;
+  --rule: #dde3ea;
+  --rule-strong: #b8c2ce;
+  --action: #2c4bd6;
+  --action-ink: #ffffff;
+  --action-soft: rgba(44, 75, 214, 0.08);
+  --allow: #18794e;
+  --allow-soft: rgba(24, 121, 78, 0.09);
+  --reroute: #b54708;
+  --reroute-soft: rgba(181, 71, 8, 0.09);
+  --block: #b42318;
+  --block-soft: rgba(180, 35, 24, 0.08);
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
 }
 
-/* ---- Shared widget frame ---- */
+/* Legacy widget aliases — every interactive reads these. */
+:root,
+:root[data-theme='light'] {
+  --wg-surface: var(--sunken);
+  --wg-surface-raised: var(--surface);
+  --wg-border: var(--rule);
+  --wg-ink: var(--ink);
+  --wg-ink-quiet: var(--ink-2);
+  --wg-accent: var(--action);
+  --wg-accent-soft: var(--action-soft);
+  --wg-good: var(--allow);
+  --wg-good-soft: var(--allow-soft);
+  --wg-warn: var(--reroute);
+  --wg-warn-soft: var(--reroute-soft);
+  --wg-bad: var(--block);
+  --wg-bad-soft: var(--block-soft);
+  --wg-mono: var(--font-mono);
+  --wg-radius: var(--r-lg);
+}
+
+/* --------------------------------------------------------------------------
+   2. Starlight mapping
+   -------------------------------------------------------------------------- */
+:root {
+  --sl-font: var(--font-sans);
+  --sl-font-mono: var(--font-mono);
+  --sl-content-width: 46rem;
+  --sl-sidebar-width: 17.5rem;
+  --sl-line-height: 1.7;
+  --sl-line-height-headings: 1.15;
+  --sl-text-body: 1.0625rem;
+  --sl-text-h1: clamp(2.1rem, 1.6rem + 2vw, 2.75rem);
+  --sl-text-h2: 1.625rem;
+  --sl-text-h3: 1.25rem;
+  --sl-text-h4: 1.0625rem;
+
+  --sl-color-white: #eef1f5;
+  --sl-color-gray-1: #d7dde5;
+  --sl-color-gray-2: #b9c2ce;
+  --sl-color-gray-3: #8c97a6;
+  --sl-color-gray-4: #5e6a7a;
+  --sl-color-gray-5: #2e3846;
+  --sl-color-gray-6: #1a212b;
+  --sl-color-black: #121820;
+  --sl-color-accent-low: #1f2a5c;
+  --sl-color-accent: #93a6ff;
+  --sl-color-accent-high: #c9d2ff;
+  --sl-color-bg-nav: #121820;
+  --sl-color-bg-sidebar: #141b24;
+  --sl-color-hairline: #262f3b;
+  --sl-color-hairline-light: #262f3b;
+}
+
+:root[data-theme='light'] {
+  --sl-color-white: #18202b;
+  --sl-color-gray-1: #232c38;
+  --sl-color-gray-2: #2f3946;
+  --sl-color-gray-3: #4a5565;
+  --sl-color-gray-4: #7a8594;
+  --sl-color-gray-5: #c9d1db;
+  --sl-color-gray-6: #eef1f5;
+  --sl-color-gray-7: #f5f7fa;
+  --sl-color-black: #ffffff;
+  --sl-color-accent-low: #e4e9fb;
+  --sl-color-accent: #2c4bd6;
+  --sl-color-accent-high: #1b2f8f;
+  --sl-color-bg-nav: #ffffff;
+  --sl-color-bg-sidebar: #f7f9fb;
+  --sl-color-hairline: #e3e8ee;
+  --sl-color-hairline-light: #e3e8ee;
+  --sl-color-hairline-shade: #e3e8ee;
+}
+
+body {
+  font-feature-settings: 'kern', 'liga', 'tnum' 0;
+  text-rendering: optimizeLegibility;
+}
+
+/* Header ------------------------------------------------------------------ */
+header.header {
+  border-bottom: 1px solid var(--sl-color-hairline);
+  backdrop-filter: none;
+}
+.site-title {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  gap: 0.6rem;
+}
+.site-title img {
+  height: 1.6rem;
+  width: auto;
+}
+
+/* Sidebar ----------------------------------------------------------------- */
+.sidebar-pane {
+  border-inline-end: 1px solid var(--sl-color-hairline);
+}
+nav.sidebar .group-label .large,
+.sidebar-content .group-label .large {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.sidebar-content details {
+  margin-block: 0.15rem;
+}
+.sidebar-content a {
+  font-size: 0.9rem;
+  line-height: 1.35;
+  padding-block: 0.4rem;
+  border-radius: var(--r-md);
+  color: var(--ink-2);
+}
+/* numbered items hang-indent so wrapped lines align under the text */
+.sidebar-content a > span:first-child {
+  display: block;
+  padding-left: 1.55em;
+  text-indent: -1.55em;
+}
+.sidebar-content a:hover {
+  color: var(--ink);
+  background: var(--action-soft);
+}
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
+  background: var(--action-soft);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--action);
+}
+
+/* Page title + meta ------------------------------------------------------- */
+.content-panel {
+  border-top-color: var(--sl-color-hairline);
+}
+.sl-markdown-content h1,
+main h1#_top {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.itg-title-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+.itg-title-meta .itg-part {
+  font-weight: 600;
+  color: var(--ink);
+}
+.itg-title-meta .itg-step {
+  font-variant-numeric: tabular-nums;
+}
+.itg-progress {
+  flex: 0 0 6rem;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--rule);
+  overflow: hidden;
+}
+.itg-progress > span {
+  display: block;
+  height: 100%;
+  background: var(--action);
+}
+
+/* Article typography ------------------------------------------------------ */
+.sl-markdown-content {
+  color: var(--sl-color-gray-2);
+}
+.sl-markdown-content :is(h2, h3, h4):not(:where(.not-content *)) {
+  font-weight: 750;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.sl-markdown-content h2:not(:where(.not-content *)) {
+  margin-top: 2.75rem;
+}
+.sl-markdown-content :is(strong, b):not(:where(.not-content *)) {
+  color: var(--ink);
+  font-weight: 650;
+}
+.sl-markdown-content a:not(:where(.not-content *)) {
+  color: var(--action);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+.sl-markdown-content a:not(:where(.not-content *)):hover {
+  text-decoration-thickness: 2px;
+}
+.sl-markdown-content code:not(:where(.not-content *)) {
+  font-size: 0.875em;
+  border-radius: var(--r-sm);
+  padding: 0.1em 0.35em;
+}
+.sl-markdown-content :is(ul, ol):not(:where(.not-content *)) li::marker {
+  color: var(--ink-3);
+}
+.sl-markdown-content table:not(:where(.not-content *)) {
+  font-size: 0.925rem;
+}
+.sl-markdown-content :is(th, td):not(:where(.not-content *)) {
+  border-color: var(--rule);
+}
+
+/* Asides: plain rule + tint, no icon chrome noise */
+.starlight-aside {
+  border-radius: var(--r-md);
+  border-inline-start-width: 3px;
+  background: var(--sunken);
+}
+.starlight-aside__title {
+  font-weight: 700;
+}
+
+/* Prev / next ------------------------------------------------------------- */
+.pagination-links a {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  box-shadow: none;
+  background: var(--surface);
+}
+.pagination-links a:hover {
+  border-color: var(--action);
+}
+.pagination-links .link-title {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+/* Focus, everywhere --------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Instrument panel — the shell every interactive shares
+      <div class="wg not-content">
+        <h3 data-kind="Simulator">Title</h3>      → header bar
+        <p class="wg-note">Intro</p>              → lede
+        …body…
+        <p class="wg-banner">About this model</p> → footer
+   -------------------------------------------------------------------------- */
 .wg {
-  border: 1px solid var(--wg-border);
-  border-radius: var(--wg-radius);
-  background: var(--wg-surface-raised);
-  color: var(--wg-ink);
-  padding: 1rem;
-  margin: 1.25rem 0;
-  font-size: 0.94rem;
-  line-height: 1.5;
+  --pad: 1.25rem;
+  position: relative;
+  margin: 2rem 0;
+  padding: 0 var(--pad) var(--pad);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  overflow: hidden;
 }
-.wg * { box-sizing: border-box; }
-.wg h3, .wg h4 { margin: 0 0 0.25rem; line-height: 1.25; }
-.wg .wg-note { color: var(--wg-ink-quiet); font-size: 0.82rem; margin: 0.35rem 0 0; }
-.wg .wg-mono { font-family: var(--wg-mono); }
+.wg *,
+.wg *::before,
+.wg *::after {
+  box-sizing: border-box;
+}
+/* own flow spacing: direct children stack with one rhythm */
+.wg > * + * {
+  margin-top: var(--space-4);
+}
+.wg > style + * {
+  margin-top: var(--space-4);
+}
+.wg p,
+.wg ol,
+.wg ul,
+.wg h4,
+.wg dl {
+  margin-block: 0;
+}
+.wg h4 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  margin-bottom: var(--space-2);
+}
+.wg strong {
+  font-weight: 650;
+  color: var(--ink);
+}
+.wg a {
+  color: var(--action);
+  text-underline-offset: 0.18em;
+}
+.wg code,
+.wg .wg-mono {
+  font-family: var(--font-mono);
+}
 
-.wg-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-.wg-col { display: flex; flex-direction: column; gap: 0.5rem; }
+/* Header bar */
+.wg > h3:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0 calc(-1 * var(--pad));
+  padding: 0.85rem var(--pad);
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface-2);
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.wg > h3:first-child[data-kind]::after {
+  content: attr(data-kind);
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
 
-/* Buttons / chips */
+/* Lede */
+.wg > h3:first-child + .wg-note {
+  margin-top: var(--space-4);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+
+/* Secondary text */
+.wg .wg-note {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* Footer: what this model is */
+.wg > p.wg-banner {
+  margin: var(--space-5) calc(-1 * var(--pad)) calc(-1 * var(--pad));
+  padding: 0.75rem var(--pad) 0.8rem calc(var(--pad) + 1.4rem);
+  border-top: 1px solid var(--rule);
+  background: var(--surface-2);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  position: relative;
+}
+.wg > p.wg-banner::before {
+  content: 'i';
+  position: absolute;
+  left: var(--pad);
+  top: 0.82rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-3);
+  color: var(--ink-3);
+  font: 700 0.6rem/0.82rem var(--font-sans);
+  text-align: center;
+}
+
+/* Layout helpers */
+.wg-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+.wg-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Buttons / segmented choices */
 .wg-btn {
   font: inherit;
-  border: 1px solid var(--wg-border);
-  background: var(--wg-surface);
-  color: var(--wg-ink);
-  border-radius: 8px;
-  padding: 0.4rem 0.7rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  min-height: 2rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink);
   cursor: pointer;
-  transition: background 0.12s ease, border-color 0.12s ease;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
-.wg-btn:hover { border-color: var(--wg-accent); }
+.wg-btn:hover:not(:disabled) {
+  border-color: var(--action);
+  color: var(--action);
+}
 .wg-btn[aria-pressed='true'],
 .wg-btn.is-active {
-  background: var(--wg-accent-soft);
-  border-color: var(--wg-accent);
-  color: var(--wg-ink);
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--action-ink);
 }
-.wg-btn:focus-visible { outline: 2px solid var(--wg-accent); outline-offset: 2px; }
+.wg-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
-/* Toggle switch */
-.wg-toggle { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
-.wg-toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+/* Native-looking switch */
+.wg-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.wg-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
 .wg-track {
-  width: 34px; height: 20px; border-radius: 999px;
-  background: var(--wg-border); position: relative; transition: background 0.15s ease; flex: none;
+  flex: none;
+  position: relative;
+  width: 2.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  background: var(--rule-strong);
+  transition: background-color 0.15s ease;
 }
 .wg-track::after {
-  content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
-  border-radius: 50%; background: #fff; transition: transform 0.15s ease;
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.25rem - 4px);
+  height: calc(1.25rem - 4px);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
 }
-.wg-toggle input:checked + .wg-track { background: var(--wg-accent); }
-.wg-toggle input:checked + .wg-track::after { transform: translateX(14px); }
-.wg-toggle input:focus-visible + .wg-track { outline: 2px solid var(--wg-accent); outline-offset: 2px; }
-
-/* Verdict pills */
-.wg-pill { display: inline-flex; align-items: center; gap: 0.3rem; border-radius: 999px; padding: 0.1rem 0.55rem; font-size: 0.78rem; font-weight: 600; }
-.wg-pill.good { background: var(--wg-good-soft); color: var(--wg-good); }
-.wg-pill.warn { background: var(--wg-warn-soft); color: var(--wg-warn); }
-.wg-pill.bad { background: var(--wg-bad-soft); color: var(--wg-bad); }
-
-/* Tables inside widgets */
-.wg-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
-.wg-table th, .wg-table td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--wg-border); vertical-align: top; }
-.wg-table th { color: var(--wg-ink-quiet); font-weight: 600; }
-
-/* A small "illustrative model" banner */
-.wg-banner {
-  font-size: 0.78rem; color: var(--wg-ink-quiet);
-  border-top: 1px dashed var(--wg-border); margin-top: 0.85rem; padding-top: 0.55rem;
+.wg-toggle input:checked + .wg-track {
+  background: var(--action);
+}
+.wg-toggle input:checked + .wg-track::after {
+  transform: translateX(1rem);
+}
+.wg-toggle input:focus-visible + .wg-track {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
 }
 
-@media (max-width: 500px) {
-  .wg { padding: 0.85rem; }
-  .wg-btn { padding: 0.35rem 0.55rem; font-size: 0.85rem; }
+/* Verdict badges — meaning only */
+.wg-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--r-sm);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.wg-pill::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+.wg-pill.good {
+  background: var(--allow-soft);
+  color: var(--allow);
+}
+.wg-pill.warn {
+  background: var(--reroute-soft);
+  color: var(--reroute);
+}
+.wg-pill.bad {
+  background: var(--block-soft);
+  color: var(--block);
+}
+
+/* Tables inside panels */
+.wg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.wg-table th,
+.wg-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.65rem;
+  border-bottom: 1px solid var(--rule);
+}
+.wg-table thead th {
+  font-weight: 650;
+  color: var(--ink-2);
+  background: var(--surface-2);
+  border-bottom-color: var(--rule-strong);
+}
+
+/* Form fields */
+.wg select,
+.wg input[type='text'],
+.wg input:not([type]),
+.wg textarea {
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-md);
+}
+.wg select {
+  min-height: 2.25rem;
+  padding: 0.4rem 0.6rem;
+}
+.wg input[type='range'] {
+  accent-color: var(--action);
+}
+.wg input[type='checkbox'] {
+  accent-color: var(--action);
+}
+
+@media (max-width: 560px) {
+  .wg {
+    --pad: 1rem;
+    margin-inline: calc(-1 * var(--sl-content-pad-x, 1rem) + 0.25rem);
+    border-radius: var(--r-md);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Home page
+   -------------------------------------------------------------------------- */
+.itg-hero {
+  padding: 1.5rem 0 0.5rem;
+}
+.itg-hero h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 1.6rem + 4.2vw, 4.4rem);
+  line-height: 0.98;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  max-width: 12ch;
+}
+.itg-hero .itg-lede {
+  margin: 1.25rem 0 0;
+  max-width: 34rem;
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.itg-rail {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 2rem 0 0;
+  color: var(--ink);
+}
+.itg-rail .beam {
+  fill: var(--surface-2);
+  stroke: currentColor;
+}
+.itg-rail .post {
+  fill: currentColor;
+}
+.itg-rail .valley {
+  fill: color-mix(in srgb, currentColor 13%, var(--surface-2));
+}
+.itg-rail .reflector {
+  fill: var(--barrier);
+}
+.itg-rail .ground {
+  stroke: var(--rule-strong);
+}
+.itg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.itg-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--r-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid var(--action);
+}
+.itg-cta.primary {
+  background: var(--action);
+  color: var(--action-ink);
+}
+.itg-cta.secondary {
+  background: transparent;
+  color: var(--action);
+}
+.itg-cta:hover {
+  filter: brightness(1.06);
+}
+
+.itg-route {
+  margin: 3.5rem 0 1rem;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+.itg-route > li {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 0 1rem;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.itg-route .itg-num {
+  font-size: 2rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.itg-route h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.itg-route p {
+  margin: 0.3rem 0 0;
+  max-width: 40rem;
+  color: var(--ink-2);
+  font-size: 0.975rem;
+}
+.itg-route .itg-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.itg-route .itg-modules a {
+  display: inline-block;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  font-size: 0.85rem;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface);
+}
+.itg-route .itg-modules a:hover {
+  border-color: var(--action);
+  color: var(--action);
+}
+.itg-route .itg-modules .itg-mnum {
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.35rem;
+}
+.itg-footnote {
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  max-width: 40rem;
+}
+
+@media (max-width: 640px) {
+  .itg-route > li {
+    grid-template-columns: 2.25rem 1fr;
+  }
+  .itg-route .itg-num {
+    font-size: 1.5rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

@@ -58,8 +58,8 @@ export default function TrainingPipeline() {
   const stage = STAGES[i];
 
   return (
-    <div className="wg">
-      <h3>Training pipeline stepper</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Stepper">Training pipeline stepper</h3>
       <p className="wg-note">
         Refusal is a learned behavior, added in stages — not a rule in the code. Step
         through to see where each safety property enters, and what it still can&apos;t
@@ -129,7 +129,7 @@ export default function TrainingPipeline() {
         .tp-node.is-done .tp-dot { border-color: var(--wg-accent); background: var(--wg-accent-soft); color: var(--wg-accent); }
         .tp-node-name { font-size: 0.68rem; text-align: center; margin-top: 0.3rem; color: var(--wg-ink-quiet); line-height: 1.2; }
         .tp-node.is-active .tp-node-name { color: var(--wg-ink); font-weight: 600; }
-        .tp-card { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.7rem 0.8rem; background: var(--wg-surface); }
+        .tp-card { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.7rem 0.8rem; background: var(--wg-surface); }
         .tp-card h4 { margin-top: 0; }
         .tp-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.6rem; }
         .tp-row { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.86rem; }

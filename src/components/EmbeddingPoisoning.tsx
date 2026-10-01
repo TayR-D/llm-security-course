@@ -64,8 +64,8 @@ export default function EmbeddingPoisoning() {
   const toSvg = (v: number) => (v / 100) * W;
 
   return (
-    <div className="wg">
-      <h3>Embedding poisoning</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Visualizer">Embedding poisoning</h3>
       <p className="wg-note">
         RAG retrieves the chunks nearest your query in embedding space and drops them into the
         context. If an attacker can add a chunk, they place it <em>near a target query</em> —
@@ -158,7 +158,7 @@ export default function EmbeddingPoisoning() {
         .ep-controls { margin: 0.5rem 0; }
         .ep-grid { display: grid; grid-template-columns: 300px 1fr; gap: 1rem; align-items: start; }
         @media (max-width: 640px) { .ep-grid { grid-template-columns: 1fr; } .ep-svg { max-width: 300px; } }
-        .ep-svg { width: 100%; border: 1px solid var(--wg-border); border-radius: 8px; background: var(--wg-surface); }
+        .ep-svg { width: 100%; border: 1px solid var(--wg-border); border-radius: var(--r-md); background: var(--wg-surface); }
         .ep-radius { fill: var(--wg-accent-soft); stroke: var(--wg-accent); stroke-dasharray: 3 3; opacity: 0.6; }
         .ep-pt { fill: var(--wg-ink-quiet); }
         .ep-pt.ep-hit { fill: var(--wg-accent); }
@@ -169,7 +169,7 @@ export default function EmbeddingPoisoning() {
         .ep-list { margin: 0.2rem 0 0.5rem; padding-left: 1.1rem; }
         .ep-list li { font-size: 0.85rem; padding: 0.1rem 0; }
         .ep-li-poison { color: var(--wg-bad); font-weight: 600; }
-        .ep-verdict { padding: 0.55rem 0.7rem; border-radius: 8px; font-size: 0.84rem; }
+        .ep-verdict { padding: 0.55rem 0.7rem; border-radius: var(--r-md); font-size: 0.84rem; }
         .ep-verdict.bad { background: var(--wg-bad-soft); }
         .ep-verdict.good { background: var(--wg-good-soft); }
       `}</style>

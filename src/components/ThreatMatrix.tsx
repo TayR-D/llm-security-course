@@ -93,8 +93,8 @@ export default function ThreatMatrix() {
   const harm = HARMS.find((x) => x.id === sel.h)!;
 
   return (
-    <div className="wg">
-      <h3>Threat actor × harm matrix</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Matrix">Threat actor × harm matrix</h3>
       <p className="wg-note">
         Who attacks LLMs, and for what. Tap a cell to see why that pairing matters and which
         defense layers address it. The ratings are the course&apos;s own threat-modeling call,
@@ -180,15 +180,15 @@ export default function ThreatMatrix() {
         .tm-corner { text-align: left !important; color: var(--wg-ink-quiet); font-weight: 600; font-size: 0.72rem; }
         .tm-colhead { font-weight: 600; font-size: 0.74rem; color: var(--wg-ink-quiet); min-width: 4.5rem; }
         .tm-rowhead { text-align: left !important; font-weight: 600; min-width: 7rem; }
-        .tm-cell { font: inherit; width: 100%; min-height: 2.1rem; border-radius: 6px; border: 1px solid var(--wg-border);
+        .tm-cell { font: inherit; width: 100%; min-height: 2.1rem; border-radius: var(--r-sm); border: 1px solid var(--wg-border);
           background: var(--wg-surface); cursor: pointer; letter-spacing: 1px; font-size: 0.7rem; }
         .tm-cell.tm-high { color: var(--wg-bad); background: var(--wg-bad-soft); }
         .tm-cell.tm-med { color: var(--wg-warn); background: var(--wg-warn-soft); }
         .tm-cell.tm-low { color: var(--wg-good); }
         .tm-cell.tm-active { outline: 2px solid var(--wg-accent); outline-offset: 1px; }
         .tm-cell:focus-visible { outline: 2px solid var(--wg-accent); }
-        .tm-detail { margin-top: 0.7rem; border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.6rem 0.7rem; background: var(--wg-surface); }
-        .tm-chip { font-size: 0.76rem; border: 1px solid var(--wg-accent); background: var(--wg-accent-soft); border-radius: 999px; padding: 0.05rem 0.5rem; }
+        .tm-detail { margin-top: 0.7rem; border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.6rem 0.7rem; background: var(--wg-surface); }
+        .tm-chip { font-size: 0.76rem; border: 1px solid var(--wg-accent); background: var(--wg-accent-soft); border-radius: var(--r-sm); padding: 0.05rem 0.5rem; }
         @media (max-width: 560px) {
           .tm-colhead { min-width: 3.6rem; font-size: 0.66rem; }
           .tm-rowhead { min-width: 5.5rem; font-size: 0.72rem; }

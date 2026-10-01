@@ -116,8 +116,8 @@ export default function CapstoneChecklist() {
   const pct = Math.round((doneCount / total) * 100);
 
   return (
-    <div className="wg">
-      <h3>Capstone checklist: secure the self-hosted platform</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Checklist">Capstone checklist: secure the self-hosted platform</h3>
       <p className="wg-note">
         A multi-tenant platform running an open-weight model with refusals removed, an agent
         harness and MCP tools. There&apos;s no provider safety net — the controls are yours. Work
@@ -163,11 +163,11 @@ export default function CapstoneChecklist() {
 
       <style>{`
         .cc-progress { display: flex; align-items: center; gap: 0.6rem; margin: 0.5rem 0 0.8rem; }
-        .cc-bar { flex: 1; height: 10px; border-radius: 999px; background: var(--wg-surface); border: 1px solid var(--wg-border); overflow: hidden; }
+        .cc-bar { flex: 1; height: 10px; border-radius: var(--r-sm); background: var(--wg-surface); border: 1px solid var(--wg-border); overflow: hidden; }
         .cc-fill { height: 100%; background: var(--wg-accent); transition: width 0.2s ease; }
         .cc-pct { font-size: 0.82rem; font-family: var(--wg-mono); color: var(--wg-ink-quiet); flex: none; }
         .cc-groups { display: flex; flex-direction: column; gap: 0.7rem; }
-        .cc-group { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.55rem 0.7rem; background: var(--wg-surface-raised); }
+        .cc-group { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.55rem 0.7rem; background: var(--wg-surface-raised); }
         .cc-group-head { display: flex; justify-content: space-between; align-items: baseline; }
         .cc-why { margin: 0.2rem 0 0.4rem; }
         .cc-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }

@@ -57,8 +57,8 @@ export default function OwaspRerank() {
   const d = delta(sel);
 
   return (
-    <div className="wg">
-      <h3>OWASP LLM Top 10: 2025 → 2026</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Ranking">OWASP LLM Top 10: 2025 → 2026</h3>
       <p className="wg-note">
         The 2026 edition kept all ten categories but re-ranked eight of them, and for the
         first time weighted the ranking with real incident data (25%) alongside the
@@ -141,7 +141,7 @@ export default function OwaspRerank() {
         @media (max-width: 720px) { .ow-grid { grid-template-columns: 1fr; } }
         .ow-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
         .ow-item { width: 100%; display: flex; align-items: center; gap: 0.5rem; text-align: left; font: inherit;
-          border: 1px solid var(--wg-border); border-radius: 7px; background: var(--wg-surface-raised);
+          border: 1px solid var(--wg-border); border-radius: var(--r-md); background: var(--wg-surface-raised);
           padding: 0.4rem 0.5rem; cursor: pointer; }
         .ow-item.is-sel { outline: 2px solid var(--wg-accent); outline-offset: 1px; }
         .ow-rank { font-family: var(--wg-mono); font-size: 0.72rem; color: var(--wg-ink-quiet); flex: none; width: 3.1rem; }
@@ -151,7 +151,7 @@ export default function OwaspRerank() {
         .ow-down, .ow-delta.ow-down { color: var(--wg-bad); }
         .ow-delta.ow-flat { color: var(--wg-ink-quiet); }
         .ow-delta.ow-new { color: var(--wg-warn); }
-        .ow-detail { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.6rem 0.7rem; background: var(--wg-surface); }
+        .ow-detail { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.6rem 0.7rem; background: var(--wg-surface); }
       `}</style>
     </div>
   );

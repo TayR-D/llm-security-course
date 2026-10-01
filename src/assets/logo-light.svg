@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 28" fill="none" role="img" aria-label="Inside the Guardrails">
+  <rect x="11.5" y="16" width="2.6" height="11" rx="0.4" fill="#18202B"/>
+  <rect x="25.9" y="16" width="2.6" height="11" rx="0.4" fill="#18202B"/>
+  <path d="M8 4.5C3.6 4.5 1.6 7.2 1.6 10.5S3.6 16.5 8 16.5Z" fill="#F5F7FA" stroke="#18202B" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M32 4.5c4.4 0 6.4 2.7 6.4 6s-2 6-6.4 6Z" fill="#F5F7FA" stroke="#18202B" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="8" y="4.5" width="24" height="12" fill="#F5F7FA" stroke="#18202B" stroke-width="1.5"/>
+  <rect x="8.75" y="8.6" width="22.5" height="3.8" fill="#D5DBE3"/>
+  <rect x="11" y="5.6" width="3.6" height="2.2" rx="0.4" fill="#F5B301"/>
+  <rect x="25.4" y="5.6" width="3.6" height="2.2" rx="0.4" fill="#F5B301"/>
+</svg>

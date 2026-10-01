@@ -55,8 +55,8 @@ export default function EvalScatter() {
   }, [sel]);
 
   return (
-    <div className="wg">
-      <h3>Attack success vs over-refusal</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Chart">Attack success vs over-refusal</h3>
       <p className="wg-note">
         Evaluating a guardrail comes down to two numbers: how often an attack succeeds
         (horizontal) and how often a benign request is wrongly refused (vertical). You want the
@@ -117,18 +117,18 @@ export default function EvalScatter() {
       <style>{`
         .es-grid { display: grid; grid-template-columns: 300px 1fr; gap: 1rem; align-items: start; }
         @media (max-width: 640px) { .es-grid { grid-template-columns: 1fr; } .es-svg { max-width: 300px; } }
-        .es-svg { width: 100%; border: 1px solid var(--wg-border); border-radius: 8px; background: var(--wg-surface); }
+        .es-svg { width: 100%; border: 1px solid var(--wg-border); border-radius: var(--r-md); background: var(--wg-surface); }
         .es-axis { stroke: var(--wg-border); stroke-width: 1.5; }
         .es-axtext { fill: var(--wg-ink-quiet); font-size: 9px; font-family: var(--wg-mono); }
         .es-ideal { fill: var(--wg-good-soft); }
         .es-idealtext { fill: var(--wg-good); font-size: 8px; font-family: var(--wg-mono); }
         .es-legend { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.5rem; }
         .es-leg { text-align: left; font: inherit; font-size: 0.82rem; border: 1px solid var(--wg-border);
-          border-radius: 7px; background: var(--wg-surface-raised); padding: 0.35rem 0.5rem; cursor: pointer;
+          border-radius: var(--r-md); background: var(--wg-surface-raised); padding: 0.35rem 0.5rem; cursor: pointer;
           display: flex; align-items: center; gap: 0.5rem; }
         .es-leg.is-sel { border-color: var(--wg-accent); background: var(--wg-accent-soft); }
         .es-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
-        .es-detail { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.55rem 0.65rem; background: var(--wg-surface); }
+        .es-detail { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.55rem 0.65rem; background: var(--wg-surface); }
       `}</style>
     </div>
   );

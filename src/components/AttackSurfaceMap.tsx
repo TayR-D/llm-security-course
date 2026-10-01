@@ -41,8 +41,8 @@ export default function AttackSurfaceMap() {
   const sel = NODES.find((n) => n.id === selId)!;
 
   return (
-    <div className="wg">
-      <h3>Attack surface map</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Map">Attack surface map</h3>
       <p className="wg-note">
         A modern agent is far more than a chatbot. Tap each component to see whether its
         input is trusted, what can go wrong, and which OWASP risks apply. Red = untrusted
@@ -87,17 +87,17 @@ export default function AttackSurfaceMap() {
         .as-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 0.7rem 0; }
         @media (max-width: 560px) { .as-map { grid-template-columns: repeat(2, 1fr); } }
         .as-node { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem;
-          border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.5rem; background: var(--wg-surface-raised);
+          border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.5rem; background: var(--wg-surface-raised);
           cursor: pointer; text-align: left; font: inherit; }
         .as-node.as-untrusted { border-left: 3px solid var(--wg-bad); }
         .as-node.as-boundary { border-left: 3px solid var(--wg-warn); }
         .as-node.as-trusted { border-left: 3px solid var(--wg-good); }
         .as-node.is-sel { outline: 2px solid var(--wg-accent); outline-offset: 1px; }
         .as-node-name { font-weight: 600; font-size: 0.84rem; }
-        .as-detail { border: 1px solid var(--wg-border); border-radius: 8px; padding: 0.6rem 0.7rem; background: var(--wg-surface); }
+        .as-detail { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.6rem 0.7rem; background: var(--wg-surface); }
         .as-risk { font-size: 0.86rem; margin: 0; }
         .as-chip { font-size: 0.74rem; border: 1px solid var(--wg-accent); background: var(--wg-accent-soft);
-          border-radius: 999px; padding: 0.05rem 0.5rem; font-family: var(--wg-mono); }
+          border-radius: var(--r-sm); padding: 0.05rem 0.5rem; font-family: var(--wg-mono); }
       `}</style>
     </div>
   );

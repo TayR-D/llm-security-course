@@ -31,8 +31,8 @@ export default function Quiz({ questions, title = 'Quick check' }: { questions: 
   }
 
   return (
-    <div className="wg">
-      <h3>{title}</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Quiz">{title}</h3>
       <p className="wg-note">
         {done ? (
           <>
@@ -90,14 +90,14 @@ export default function Quiz({ questions, title = 'Quick check' }: { questions: 
         .qz-prompt { font-weight: 600; font-size: 0.9rem; margin: 0 0 0.45rem; }
         .qz-opts { display: flex; flex-direction: column; gap: 0.35rem; }
         .qz-opt { text-align: left; font: inherit; font-size: 0.85rem; border: 1px solid var(--wg-border);
-          border-radius: 7px; background: var(--wg-surface-raised); padding: 0.4rem 0.55rem; cursor: pointer;
+          border-radius: var(--r-md); background: var(--wg-surface-raised); padding: 0.4rem 0.55rem; cursor: pointer;
           display: flex; gap: 0.5rem; align-items: baseline; }
         .qz-opt:disabled { cursor: default; }
         .qz-opt:not(:disabled):hover { border-color: var(--wg-accent); }
         .qz-mark { font-family: var(--wg-mono); flex: none; }
         .qz-opt.qz-correct { background: var(--wg-good-soft); border-color: var(--wg-good); }
         .qz-opt.qz-wrong { background: var(--wg-bad-soft); border-color: var(--wg-bad); }
-        .qz-why { font-size: 0.83rem; margin: 0.45rem 0 0; padding: 0.4rem 0.55rem; border-radius: 6px; background: var(--wg-surface); }
+        .qz-why { font-size: 0.83rem; margin: 0.45rem 0 0; padding: 0.4rem 0.55rem; border-radius: var(--r-sm); background: var(--wg-surface); }
         .qz-why-ok { border-left: 3px solid var(--wg-good); }
         .qz-why-no { border-left: 3px solid var(--wg-bad); }
       `}</style>

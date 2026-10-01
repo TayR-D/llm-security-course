@@ -62,8 +62,8 @@ export default function ContainmentTimeline() {
   }, [on]);
 
   return (
-    <div className="wg">
-      <h3>Containment timeline</h3>
+    <div className="wg not-content">
+      <h3 data-kind="Simulator">Containment timeline</h3>
       <p className="wg-note">
         Sometimes the risk isn&apos;t a malicious user — it&apos;s the agent pursuing its goal
         too single-mindedly (reward hacking, actions beyond intent, sandbox escape), as 2026
@@ -105,14 +105,14 @@ export default function ContainmentTimeline() {
       <style>{`
         .ct2-layers { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.6rem 0; }
         @media (max-width: 560px) { .ct2-layers { grid-template-columns: 1fr; } }
-        .ct2-layer { border: 1px solid var(--wg-border); border-radius: 7px; padding: 0.45rem 0.55rem; background: var(--wg-surface-raised); }
+        .ct2-layer { border: 1px solid var(--wg-border); border-radius: var(--r-md); padding: 0.45rem 0.55rem; background: var(--wg-surface-raised); }
         .ct2-name { font-weight: 600; font-size: 0.84rem; }
         .ct2-blurb { margin: 0.3rem 0 0; }
         .ct2-steps { margin: 0.4rem 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.3rem; }
         .ct2-step { font-size: 0.84rem; }
         .ct2-step.ct2-danger { color: var(--wg-bad); }
         .ct2-step.ct2-blocked { color: var(--wg-good); font-weight: 600; }
-        .ct2-outcome { margin-top: 0.5rem; padding: 0.55rem 0.7rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; }
+        .ct2-outcome { margin-top: 0.5rem; padding: 0.55rem 0.7rem; border-radius: var(--r-md); font-size: 0.85rem; font-weight: 600; }
         .ct2-outcome.good { background: var(--wg-good-soft); }
         .ct2-outcome.bad { background: var(--wg-bad-soft); }
       `}</style>
